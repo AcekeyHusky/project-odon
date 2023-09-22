@@ -4,6 +4,22 @@ extends Node
 @onready var game = $".."
 @onready var logs = get_node("../Logs")
 
+var commands_list = [
+	{
+		"cmd": ["ดู", "เบิ่ง"],
+		"desc": "คำอธิบาย",
+		"fun": Callable(self, "cmd_look"),
+		"visible_in_help": true,
+	},
+	{
+		"cmd": "ค้น",
+		"desc": "คำอธิบาย",
+		"fun": Callable(self, "cmd_search"),
+		"visible_in_help": true,
+	},
+	
+	# เพิ่มต่อให้ครบด้วยจ้า.....
+]
 
 var msg0:String
 var msg1:String
@@ -32,7 +48,14 @@ func cmd_clear():
 	logs.clear()
 	
 func cmd_help():
-	game.printf("ช่วยตัวเองไปก่อนนะ")
+	game.printf("ดูเหมือนว่าคุณจะสามารถทำสิ่งต่อไปนี้ได้.....")
+	for _cmd in commands_list.filter(func(item): return item['visible_in_help'] == true ):
+		var _display_cmd = ""
+		if ( typeof(_cmd.cmd) == TYPE_ARRAY ):
+			_display_cmd = ", ".join( PackedStringArray(_cmd.cmd) )
+		else:
+			_display_cmd = _cmd.cmd
+		game.printf( "- %s ( %s )" % [ _display_cmd, _cmd.desc ] )
 	
 func cmd_go():
 	if game.shall_pass():

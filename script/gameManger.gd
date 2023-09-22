@@ -36,6 +36,7 @@ func clear_text():
 	$TextEdit.clear()
 	
 func run_command(text):
+	printf("> '%s'" % text)
 	if text == "ค้น":
 		$Commands.cmd_search()
 	elif text == "ดู" or text == "เบิ่ง":
