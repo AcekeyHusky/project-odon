@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwd6iobkvqiah"]
+[gd_scene load_steps=9 format=3 uid="uid://dwd6iobkvqiah"]
 
 [ext_resource type="Script" path="res://script/game.gd" id="1_bh3ms"]
 [ext_resource type="Script" path="res://script/gameManger.gd" id="1_vc8se"]
 [ext_resource type="Script" path="res://script/events.gd" id="2_k2c50"]
 [ext_resource type="Script" path="res://script/commands.gd" id="3_3w2aq"]
+[ext_resource type="Theme" uid="uid://b0deih8fdao70" path="res://assets/themes/theme_01.tres" id="3_ep55m"]
 [ext_resource type="Script" path="res://script/places.gd" id="4_t4l5y"]
 [ext_resource type="Script" path="res://script/world.gd" id="6_aakde"]
 
@@ -32,14 +33,15 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("3_ep55m")
 script = ExtResource("1_vc8se")
 
 [node name="Logs" type="RichTextLabel" parent="GameManager"]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 2.0
-offset_right = 1153.0
-offset_bottom = 644.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 1136.0
+offset_bottom = 632.0
 auto_translate = false
 localize_numeral_system = false
 theme_override_font_sizes/normal_font_size = 20

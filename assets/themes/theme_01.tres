@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b0deih8fdao70"]
+
+[ext_resource type="FontFile" uid="uid://kitgidylguyc" path="res://assets/fonts/MNW PidTermLaew.ttf" id="1_qwg76"]
+
+[resource]
+default_font = ExtResource("1_qwg76")
