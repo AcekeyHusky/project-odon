@@ -1,0 +1,34 @@
+[gd_scene load_steps=9 format=3 uid="uid://balihp4qfx0hg"]
+
+[ext_resource type="Script" path="res://scripts/commands/Commands.gd" id="1_qbptl"]
+[ext_resource type="Script" path="res://scripts/commands/CmdHelp.gd" id="2_hmley"]
+[ext_resource type="Script" path="res://scripts/commands/CmdFilter.gd" id="3_2es76"]
+[ext_resource type="Script" path="res://scripts/commands/CmdLook.gd" id="3_7nb1r"]
+[ext_resource type="Script" path="res://scripts/commands/CmdSearch.gd" id="5_0d04i"]
+[ext_resource type="Script" path="res://scripts/commands/CmdSettings.gd" id="6_446ub"]
+[ext_resource type="Script" path="res://scripts/commands/CmdClear.gd" id="7_ve3dr"]
+[ext_resource type="Script" path="res://scripts/commands/CmdGo.gd" id="8_wsfdc"]
+
+[node name="Commands" type="Node"]
+script = ExtResource("1_qbptl")
+
+[node name="CmdExample" type="Node" parent="."]
+script = ExtResource("7_ve3dr")
+
+[node name="CmdHelp" type="Node" parent="."]
+script = ExtResource("2_hmley")
+
+[node name="CmdFilter" type="Node" parent="."]
+script = ExtResource("3_2es76")
+
+[node name="CmdLook" type="Node" parent="."]
+script = ExtResource("3_7nb1r")
+
+[node name="CmdSearch" type="Node" parent="."]
+script = ExtResource("5_0d04i")
+
+[node name="CmdSettings" type="Node" parent="."]
+script = ExtResource("6_446ub")
+
+[node name="CmdGo" type="Node" parent="."]
+script = ExtResource("8_wsfdc")
