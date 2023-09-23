@@ -10,6 +10,7 @@ var random = RandomNumberGenerator.new()
 @onready var player = $Player
 @onready var world = $World
 @onready var logs = $Logs
+@onready var game = get_node("../Game")
 
 func generate_world(max_size):
 	world.size = 2
@@ -37,24 +38,35 @@ func clear_text():
 	
 func run_command(text):
 	printf("> '%s'" % text)
-	if text == "ค้น":
-		$Commands.cmd_search()
-	elif text == "ดู" or text == "เบิ่ง":
-		$Commands.cmd_look()
-	elif text == "นอน":
-		$Commands.cmd_rest()
-	elif text == "ล้าง":
-		$Commands.cmd_clear()
-	elif text == "ไป":
-		$Commands.cmd_go()
-	elif text == "ช่วย":
-		$Commands.cmd_help()
-	elif text == "สถานะ":
-		$Commands.cmd_status()
-	elif text == "ต่อย":
-		$Commands.cmd_punch()
+	if $Setting.settingMode:
+		if !colorCheck(text):
+			printf("คุณต้องใส่ค่าสี RGB ก่อน")
+		else:
+			printf("สีอักษรปัจจุบัน: " + $Setting.textColor)
+			printf("กลับเข้าสู่โหมดเล่นเกมปกติ")
+			$Setting.setTextColor(text)
+			$Setting.settingMode = false
 	else:
-		printf("ไม่พบคำสั่งที่คุณใช้ กรุณาพิมพ์ 'ช่วย'")
+		if text == "ค้น":
+			$Commands.cmd_search()
+		elif text == "ดู" or text == "เบิ่ง":
+			$Commands.cmd_look()
+		elif text == "นอน" or text == "พัก":
+			$Commands.cmd_rest()
+		elif text == "ล้าง":
+			$Commands.cmd_clear()
+		elif text == "ไป":
+			$Commands.cmd_go()
+		elif text == "ช่วย":
+			$Commands.cmd_help()
+		elif text == "สถานะ":
+			$Commands.cmd_status()
+		elif text == "ต่อย":
+			$Commands.cmd_punch()
+		elif text == "ปรับแต่ง" or text == "ตั้งค่า":
+			$Commands.cmd_setting()
+		else:
+			printf("ไม่พบคำสั่งที่คุณใช้ กรุณาพิมพ์ 'ช่วย'")
 	
 func shall_pass():
 	# if no_enemy_block():
@@ -77,8 +89,17 @@ func _ready():
 	printf($Events.events.ev_start.msg0)
 
 func _process(_delta):
+	$Logs.modulate = $Setting.textColor
 	if Input.is_action_just_pressed("enter") and $TextEdit.text != "":
 		run_command($TextEdit.text)
 		clear_text()
 		
 
+func colorCheck(text):
+	if text.length() == 6:
+		for i in text:
+			if !(i.is_valid_hex_number()):
+				return false
+		return true
+	else:
+		return false

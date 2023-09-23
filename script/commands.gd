@@ -3,18 +3,55 @@ extends Node
 @onready var player = get_node("../Player")
 @onready var game = $".."
 @onready var logs = get_node("../Logs")
+@onready var setting = get_node("../Setting")
 
 var commands_list = [
 	{
 		"cmd": ["ดู", "เบิ่ง"],
-		"desc": "คำอธิบาย",
+		"desc": "ดูไง",
 		"fun": Callable(self, "cmd_look"),
 		"visible_in_help": true,
 	},
 	{
-		"cmd": "ค้น",
-		"desc": "คำอธิบาย",
-		"fun": Callable(self, "cmd_search"),
+		"cmd": "นอน",
+		"desc": "นอนไง",
+		"fun": Callable(self, "cmd_rest"),
+		"visible_in_help": true,
+	},
+	{
+		"cmd": "ล้าง",
+		"desc": "ลบข้อความทั้งหมดไปจากหน้าต่าง",
+		"fun": Callable(self, "cmd_clear"),
+		"visible_in_help": true,
+	},
+	{
+		"cmd": "ไป",
+		"desc": "ไปไง",
+		"fun": Callable(self, "cmd_go"),
+		"visible_in_help": true,
+	},
+	{
+		"cmd": "ช่วย",
+		"desc": "ช่วยด้วยยยยยยยยยยยยยยยยยยยยย",
+		"fun": Callable(self, "cmd_help"),
+		"visible_in_help": true,
+	},
+	{
+		"cmd": "สถานะ",
+		"desc": "สถานะไง",
+		"fun": Callable(self, "cmd_status"),
+		"visible_in_help": true,
+	},
+	{
+		"cmd": "ต่อย",
+		"desc": "ต่อยไง",
+		"fun": Callable(self, "cmd_punch"),
+		"visible_in_help": true,
+	},
+	{
+		"cmd": ["ปรับแต่ง","ตั้งค่า"],
+		"desc": "ปรับแต่งรูปแบบจอแสดงผล (สีข้อความ)",
+		"fun": Callable(self, "cmd_setting"),
 		"visible_in_help": true,
 	},
 	
@@ -67,3 +104,8 @@ func cmd_status():
 func cmd_punch():
 	# If no enemy
 	game.printf("คุณต่อยลม")
+
+func cmd_setting():
+	setting.settingMode = true
+	game.printf("คุณเข้าสู่หน้าตั้งค่า/ปรับแต่งจอแสดงผล")
+	game.printf("ใส่รหัสสีเพื่อเปลี่ยนสีตัวอักษร (รหัส RGB โดยไม่ต้องมี #)")
