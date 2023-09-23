@@ -10,7 +10,8 @@ var random = RandomNumberGenerator.new()
 @onready var player = $Player
 @onready var world = $World
 @onready var logs = $Logs
-@onready var game = get_node("../Game")
+@onready var input = $Input
+@onready var settings = $Settings
 
 func generate_world(max_size):
 	world.size = 2
@@ -34,18 +35,18 @@ func printf(_text):
 		logs.add_text(_text)
 	
 func clear_text():
-	$TextEdit.clear()
+	input.clear()
 	
 func run_command(text):
-	printf("> '%s'" % text)
-	if $Setting.settingMode:
+	printf("> %s" % text)
+	if settings.settingMode:
 		if !colorCheck(text):
 			printf("คุณต้องใส่ค่าสี RGB ก่อน")
 		else:
-			printf("สีอักษรปัจจุบัน: " + $Setting.textColor)
+			printf("สีอักษรปัจจุบัน: " + settings.textColor)
 			printf("กลับเข้าสู่โหมดเล่นเกมปกติ")
-			$Setting.setTextColor(text)
-			$Setting.settingMode = false
+			settings.setTextColor(text)
+			settings.settingMode = false
 	else:
 		if text == "ค้น":
 			$Commands.cmd_search()
@@ -83,18 +84,17 @@ func take_step():
 		
 func _ready():
 	random.randomize()
-	$TextEdit.grab_focus()
+	input.grab_focus()
 	get_event($Events.events.ev_start)
 	get_place(cur_place)
 	printf($Events.events.ev_start.msg0)
 
 func _process(_delta):
-	$Logs.modulate = $Setting.textColor
-	if Input.is_action_just_pressed("enter") and $TextEdit.text != "":
-		run_command($TextEdit.text)
+	$Logs.modulate = $Settings.textColor
+	if Input.is_action_just_pressed("enter") and input.text != "":
+		run_command(input.text)
 		clear_text()
 		
-
 func colorCheck(text):
 	if text.length() == 6:
 		for i in text:

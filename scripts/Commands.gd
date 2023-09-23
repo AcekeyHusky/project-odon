@@ -3,7 +3,7 @@ extends Node
 @onready var player = get_node("../Player")
 @onready var game = $".."
 @onready var logs = get_node("../Logs")
-@onready var setting = get_node("../Setting")
+@onready var settings = get_node("../Settings")
 
 var commands_list = [
 	{
@@ -106,6 +106,6 @@ func cmd_punch():
 	game.printf("คุณต่อยลม")
 
 func cmd_setting():
-	setting.settingMode = true
+	settings.settingMode = true
 	game.printf("คุณเข้าสู่หน้าตั้งค่า/ปรับแต่งจอแสดงผล")
 	game.printf("ใส่รหัสสีเพื่อเปลี่ยนสีตัวอักษร (รหัส RGB โดยไม่ต้องมี #)")

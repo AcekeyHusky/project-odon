@@ -1,13 +1,13 @@
 [gd_scene load_steps=10 format=3 uid="uid://dwd6iobkvqiah"]
 
-[ext_resource type="Script" path="res://script/game.gd" id="1_bh3ms"]
-[ext_resource type="Script" path="res://script/gameManger.gd" id="1_vc8se"]
-[ext_resource type="Script" path="res://script/events.gd" id="2_k2c50"]
-[ext_resource type="Script" path="res://script/commands.gd" id="3_3w2aq"]
+[ext_resource type="Script" path="res://scripts/Game.gd" id="1_cy8ls"]
 [ext_resource type="Theme" uid="uid://b0deih8fdao70" path="res://assets/themes/theme_01.tres" id="3_ep55m"]
-[ext_resource type="Script" path="res://script/places.gd" id="4_t4l5y"]
-[ext_resource type="Script" path="res://script/world.gd" id="6_aakde"]
-[ext_resource type="Script" path="res://Setting.gd" id="8_xejvh"]
+[ext_resource type="Script" path="res://scripts/GameManger.gd" id="3_swuky"]
+[ext_resource type="Script" path="res://scripts/Settings.gd" id="4_bhwpl"]
+[ext_resource type="Script" path="res://scripts/Commands.gd" id="5_06phl"]
+[ext_resource type="Script" path="res://scripts/Events.gd" id="6_axqxg"]
+[ext_resource type="Script" path="res://scripts/Places.gd" id="7_sldi0"]
+[ext_resource type="Script" path="res://scripts/World.gd" id="8_bucla"]
 
 [sub_resource type="GDScript" id="GDScript_82uow"]
 script/source = "extends Node
@@ -27,7 +27,7 @@ var inventory = {
 "
 
 [node name="Game" type="Node2D"]
-script = ExtResource("1_bh3ms")
+script = ExtResource("1_cy8ls")
 
 [node name="GameManager" type="Control" parent="."]
 layout_mode = 3
@@ -35,10 +35,10 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("3_ep55m")
-script = ExtResource("1_vc8se")
+script = ExtResource("3_swuky")
 
-[node name="Setting" type="Node" parent="GameManager"]
-script = ExtResource("8_xejvh")
+[node name="Settings" type="Node" parent="GameManager"]
+script = ExtResource("4_bhwpl")
 
 [node name="Logs" type="RichTextLabel" parent="GameManager"]
 modulate = Color(0, 1, 1, 1)
@@ -55,7 +55,7 @@ fit_content = true
 scroll_following = true
 threaded = true
 
-[node name="TextEdit" type="TextEdit" parent="GameManager"]
+[node name="Input" type="TextEdit" parent="GameManager"]
 layout_mode = 0
 offset_left = 834.0
 offset_top = 560.0
@@ -72,13 +72,13 @@ caret_blink = true
 script = SubResource("GDScript_82uow")
 
 [node name="Commands" type="Node" parent="GameManager"]
-script = ExtResource("3_3w2aq")
+script = ExtResource("5_06phl")
 
 [node name="Events" type="Node" parent="GameManager"]
-script = ExtResource("2_k2c50")
+script = ExtResource("6_axqxg")
 
 [node name="Places" type="Node" parent="GameManager"]
-script = ExtResource("4_t4l5y")
+script = ExtResource("7_sldi0")
 
 [node name="World" type="Node" parent="GameManager"]
-script = ExtResource("6_aakde")
+script = ExtResource("8_bucla")
