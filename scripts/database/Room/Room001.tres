@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Room" load_steps=3 format=3 uid="uid://biey88r7gg4yc"]
+
+[ext_resource type="Script" path="res://scripts/database/Room/room.gd" id="1_fmntd"]
+[ext_resource type="Script" path="res://scripts/database/Room/Room001.gd" id="3_cydto"]
+
+[resource]
+script = ExtResource("1_fmntd")
+name = "ห้องสมุด"
+description = "ห้องสมุดที่มีแต่หนังสือ ไม่มีสมุด"
+north = "res://scripts/database/Room/Room002.tres"
+south = ""
+east = ""
+west = ""
+up = ""
+down = ""
+source = ExtResource("3_cydto")

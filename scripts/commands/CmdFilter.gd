@@ -6,5 +6,5 @@ extends Node
 
 var key = "เหี้ย"
 
-func fun():
+func fun(_args):
 	game.printf("จุ๊ๆ ไม่เอา ไม่พูด")
