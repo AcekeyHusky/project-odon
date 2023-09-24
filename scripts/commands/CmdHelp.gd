@@ -59,7 +59,7 @@ var commands_list = [
 	# เพิ่มต่อให้ครบด้วยจ้า.....
 ]
 
-func fun():
+func fun(_args):
 	game.printf("ดูเหมือนว่าคุณจะสามารถทำสิ่งต่อไปนี้ได้.....")
 	for _cmd in commands_list.filter(func(item): return item['visible_in_help'] == true ):
 		var _display_cmd = ""

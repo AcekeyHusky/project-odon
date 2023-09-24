@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Room" load_steps=2 format=3 uid="uid://c0g2go2h8pg4g"]
+
+[ext_resource type="Script" path="res://scripts/database/Room/room.gd" id="1_g23nj"]
+
+[resource]
+script = ExtResource("1_g23nj")
+name = "โถงทางเดิน 1"
+description = "โถงทางเดินที่ยาวไปสุดลูกหูลูกตา เหมือนว่ายังสามารถไปต่อทาง  \"เหนือ\" ได้นะ"
+things_in_room = {
+"เหนือ": "มองดูไปทางเหนือ เหมือนจะเป็นทางเดืนไม่สิ้นสุดแต่ก็ยังดีกว่าอยู่ที่นี่ต่อไปละนะ"
+}
+north = "res://scripts/database/Room/Room003.tres"
+south = "res://scripts/database/Room/Room001.tres"
+east = ""
+west = ""
+up = ""
+down = ""

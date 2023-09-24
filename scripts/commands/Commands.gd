@@ -1,7 +1,7 @@
 extends Node
 @onready var player = get_node("../Player")
 @onready var game = $".."
-@onready var logs = get_node("../Logs")
+@onready var logs = get_node("../ScrollContainer/VBoxContainer/Logs")
 @onready var settings = get_node("../Settings")
 
 
@@ -39,10 +39,10 @@ func process_input(input):
 				for child in get_children():
 					var child_key = child.get("key")
 					if child_key == first_word:
-						child.fun()
+						child.fun(words)
 						found_key = true
 						break
-				if!found_key:
+				if !found_key:
 					game.printf("ไม่พบคำสั่งที่คุณใช้ กรุณาพิมพ์ 'ช่วย'")
 					
 func colorCheck(text):

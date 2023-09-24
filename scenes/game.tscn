@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://mpjlxjskprpi"]
+[gd_scene load_steps=12 format=3 uid="uid://mpjlxjskprpi"]
 
+[ext_resource type="Resource" uid="uid://biey88r7gg4yc" path="res://scripts/database/Room/Room001.tres" id="2_s6un3"]
 [ext_resource type="Theme" uid="uid://b0deih8fdao70" path="res://assets/themes/theme_01.tres" id="3_ep55m"]
 [ext_resource type="Script" path="res://scripts/Settings.gd" id="4_bhwpl"]
 [ext_resource type="PackedScene" uid="uid://balihp4qfx0hg" path="res://scenes/commands.tscn" id="5_1teoh"]
@@ -14,7 +15,7 @@ script/source = "extends Control
 @onready var game = self
 @onready var player = $Player
 @onready var world = $World
-@onready var logs = $Logs
+@onready var logs = $ScrollContainer/VBoxContainer/Logs
 @onready var input = $Input
 @onready var settings = $Settings
 @onready var commands = $Commands
@@ -27,6 +28,8 @@ var room_env:String
 var random = RandomNumberGenerator.new()
 enum stages {FREE, SCRIPT}
 var cur_stage = stages.FREE
+
+@export var current_room : Room
 	
 func get_event(event):
 	cur_place = event.place
@@ -44,6 +47,8 @@ func printf(text):
 		logs.add_text(\"\\n\"+text)
 	else:
 		logs.add_text(text)
+	await get_tree().create_timer(0.1).timeout
+	_scroll_bottom()
 
 func can_pass():
 	# if no_enemy_block
@@ -61,19 +66,38 @@ func take_step():
 func _ready():
 	random.randomize()
 	input.grab_focus()
-	get_event($Events.events.ev_start)
-	get_place(cur_place)
-	printf($Events.events.ev_start.msg0)
-	print(cur_stage)
-	
+#	get_event($Events.events.ev_start)
+#	get_place(cur_place)
+#	printf($Events.events.ev_start.msg0)
+#	print(cur_stage)
+	if current_room :
+		current_room.connect(\"printf\",printf)
+		current_room.exec(\"start\")
+
+func _scroll_bottom():
+	$ScrollContainer.scroll_vertical = $ScrollContainer.get_v_scroll_bar().max_value
+	pass
+
 func _on_input_entered():
 		commands.process_input(input.text)
 		input.clear()
 
 func _process(_delta):
-	$Logs.modulate = $Settings.textColor
+	logs.modulate = $Settings.textColor
 	if Input.is_action_just_pressed(\"enter\") and input.text != \"\":
 		_on_input_entered()
+		
+func go_to_room(dir:String):
+	var target = game.current_room.go_to_dir(dir)
+	
+	if target:
+		current_room = load(target)
+		current_room.connect(\"printf\",printf)
+		player.stats.tired -= 1
+		current_room.enter_room()
+	else:
+		print(\"cannot go \",dir)
+	pass
 "
 
 [sub_resource type="GDScript" id="GDScript_82uow"]
@@ -95,12 +119,15 @@ var inventory = {
 
 [node name="Game" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 auto_translate = false
 theme = ExtResource("3_ep55m")
 script = SubResource("GDScript_j0p1s")
+current_room = ExtResource("2_s6un3")
 
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("8_pbxnv")
@@ -108,13 +135,24 @@ script = ExtResource("8_pbxnv")
 [node name="Settings" type="Node" parent="."]
 script = ExtResource("4_bhwpl")
 
-[node name="Logs" type="RichTextLabel" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -123.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Logs" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
 modulate = Color(0, 1, 1, 1)
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 1136.0
-offset_bottom = 632.0
+layout_mode = 2
+size_flags_vertical = 3
 auto_translate = false
 localize_numeral_system = false
 theme_override_font_sizes/normal_font_size = 20
@@ -124,11 +162,17 @@ scroll_following = true
 threaded = true
 
 [node name="Input" type="TextEdit" parent="."]
-layout_mode = 0
-offset_left = 834.0
-offset_top = 560.0
-offset_right = 1135.0
-offset_bottom = 636.0
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -45.0
+offset_right = -14.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 0
 auto_translate = false
 localize_numeral_system = false
 theme_override_colors/background_color = Color(0, 0, 0, 1)

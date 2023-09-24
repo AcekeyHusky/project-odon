@@ -12,6 +12,10 @@ extends Node
 var key = "ดู"
 var aliases = ["เบิ่ง"]
 
-func fun():
-	game.printf("คุณแหกตาเบิ่งสถานที่แห่งนี้ และพบว่า..." + game.room_env)
+func fun(_args):
+	if _args.size() > 1 :
+		game.current_room.look_something(_args[1])
+	else:
+		game.current_room.look()
+	
 
