@@ -3,7 +3,10 @@ extends Node
 @onready var game = $".."
 @onready var logs = get_node("../ScrollContainer/VBoxContainer/Logs")
 @onready var settings = get_node("../Settings")
+@onready var history = get_node("../CommandHistory")
 
+var command_hash:Dictionary = {}
+var command_history: Array[String] = []
 
 func process_input(input):
 	game.printf("> %s" % input)
@@ -44,7 +47,15 @@ func process_input(input):
 						break
 				if !found_key:
 					game.printf("ไม่พบคำสั่งที่คุณใช้ กรุณาพิมพ์ 'ช่วย'")
-					
+
+	command_hash[input] = true
+	
+	for key in command_hash:
+		if !command_history.has(key):
+			command_history.append(key)
+
+	
+	
 func colorCheck(text):
 	if text.length() == 6:
 		for i in text:
