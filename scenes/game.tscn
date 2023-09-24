@@ -19,6 +19,7 @@ script/source = "extends Control
 @onready var input = $Input
 @onready var settings = $Settings
 @onready var commands = $Commands
+@onready var commandHistory = $CommandHistory
 
 var turn:int = 0
 var cur_place
@@ -81,11 +82,17 @@ func _scroll_bottom():
 func _on_input_entered():
 		commands.process_input(input.text)
 		input.clear()
+		commandHistory.text = \"\"
 
 func _process(_delta):
 	logs.modulate = $Settings.textColor
 	if Input.is_action_just_pressed(\"enter\") and input.text != \"\":
 		_on_input_entered()
+		
+	if Input.is_action_just_pressed(\"ui_right\") and commandHistory.text.length() > 0:
+		input.text=\"\"
+		input.insert_text_at_caret(commandHistory.text)
+		
 		
 func go_to_room(dir:String):
 	var target = game.current_room.go_to_dir(dir)
@@ -98,6 +105,14 @@ func go_to_room(dir:String):
 	else:
 		print(\"cannot go \",dir)
 	pass
+
+
+func _on_input_text_changed():
+	var match_command = commands.command_history.filter(func(text): return text.begins_with(input.text))
+	commandHistory.text = \"\"
+	if match_command.size() > 0 :
+		var command_text = match_command[0]
+		commandHistory.text = command_text
 "
 
 [sub_resource type="GDScript" id="GDScript_82uow"]
@@ -180,6 +195,15 @@ theme_override_font_sizes/font_size = 20
 wrap_mode = 1
 caret_blink = true
 
+[node name="CommandHistory" type="Label" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 609.0
+offset_right = 258.0
+offset_bottom = 643.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.321569)
+theme_override_font_sizes/font_size = 20
+
 [node name="Player" type="Node" parent="."]
 script = SubResource("GDScript_82uow")
 
@@ -196,3 +220,5 @@ script = ExtResource("8_bucla")
 
 [node name="Encounters" type="Node" parent="."]
 script = ExtResource("8_ybp4v")
+
+[connection signal="text_changed" from="Input" to="." method="_on_input_text_changed"]
