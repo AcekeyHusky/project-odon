@@ -67,4 +67,5 @@ func fun(_args):
 			_display_cmd = ", ".join( PackedStringArray(_cmd.cmd) )
 		else:
 			_display_cmd = _cmd.cmd
-		game.printf( "- %s ( %s )" % [ _display_cmd, _cmd.desc ] )
+		#game.printf( "- %s ( %s )" % [ _display_cmd, _cmd.desc ] )
+		game.printf( "- [hint=%s]%s[/hint]" % [ _cmd.desc, _display_cmd ])

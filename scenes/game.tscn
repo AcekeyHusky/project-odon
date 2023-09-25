@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://mpjlxjskprpi"]
+[gd_scene load_steps=14 format=3 uid="uid://mpjlxjskprpi"]
 
 [ext_resource type="Resource" uid="uid://biey88r7gg4yc" path="res://scripts/database/Room/Room001.tres" id="2_s6un3"]
 [ext_resource type="Theme" uid="uid://b0deih8fdao70" path="res://assets/themes/theme_01.tres" id="3_ep55m"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://scripts/World.gd" id="8_bucla"]
 [ext_resource type="Script" path="res://scripts/Node2D.gd" id="8_pbxnv"]
 [ext_resource type="Script" path="res://scripts/encounters/Encounters.gd" id="8_ybp4v"]
+[ext_resource type="Script" path="res://scripts/Music.gd" id="10_ea2c1"]
+[ext_resource type="AudioStream" uid="uid://dkyd8fnsnmkla" path="res://assets/audio/se/beep.wav" id="11_beu3v"]
 
 [sub_resource type="GDScript" id="GDScript_j0p1s"]
 script/source = "extends Control
@@ -20,6 +22,7 @@ script/source = "extends Control
 @onready var settings = $Settings
 @onready var commands = $Commands
 @onready var commandHistory = $CommandHistory
+@onready var music = $Music
 
 var turn:int = 0
 var cur_place
@@ -45,11 +48,14 @@ func get_place(place):
 
 func printf(text):
 	if logs.get_parsed_text() != \"\":
-		logs.add_text(\"\\n\"+text)
+		#ใช้ append_text แทน add_text เพื่อให้สามารถใช้ bbcode ได้
+		logs.append_text(\"\\n\"+text)
 	else:
-		logs.add_text(text)
+		#ใช้ append_text แทน add_text เพื่อให้สามารถใช้ bbcode ได้
+		logs.append_text(text)
 	await get_tree().create_timer(0.1).timeout
 	_scroll_bottom()
+	
 
 func can_pass():
 	# if no_enemy_block
@@ -74,6 +80,7 @@ func _ready():
 	if current_room :
 		current_room.connect(\"printf\",printf)
 		current_room.exec(\"start\")
+	
 
 func _scroll_bottom():
 	$ScrollContainer.scroll_vertical = $ScrollContainer.get_v_scroll_bar().max_value
@@ -92,8 +99,13 @@ func _process(_delta):
 	if Input.is_action_just_pressed(\"ui_right\") and commandHistory.text.length() > 0:
 		input.text=\"\"
 		input.insert_text_at_caret(commandHistory.text)
-		
-		
+	
+	# อนิเมท ข้อความขึ้นาทีละตัว
+	if(logs.get_total_character_count() > logs.visible_characters):
+		logs.visible_characters += 1
+		music.play_se_typing()
+
+
 func go_to_room(dir:String):
 	var target = game.current_room.go_to_dir(dir)
 	
@@ -155,7 +167,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -123.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -72.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -175,6 +190,7 @@ bbcode_enabled = true
 fit_content = true
 scroll_following = true
 threaded = true
+visible_characters_behavior = 1
 
 [node name="Input" type="TextEdit" parent="."]
 layout_mode = 1
@@ -220,5 +236,11 @@ script = ExtResource("8_bucla")
 
 [node name="Encounters" type="Node" parent="."]
 script = ExtResource("8_ybp4v")
+
+[node name="Music" type="Node" parent="."]
+script = ExtResource("10_ea2c1")
+
+[node name="beep" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("11_beu3v")
 
 [connection signal="text_changed" from="Input" to="." method="_on_input_text_changed"]
