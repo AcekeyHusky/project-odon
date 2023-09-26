@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://mpjlxjskprpi"]
+[gd_scene load_steps=16 format=3 uid="uid://mpjlxjskprpi"]
 
 [ext_resource type="Resource" uid="uid://biey88r7gg4yc" path="res://scripts/database/Room/Room001.tres" id="2_s6un3"]
 [ext_resource type="Theme" uid="uid://b0deih8fdao70" path="res://assets/themes/theme_01.tres" id="3_ep55m"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://scripts/encounters/Encounters.gd" id="8_ybp4v"]
 [ext_resource type="Script" path="res://scripts/Music.gd" id="10_ea2c1"]
 [ext_resource type="AudioStream" uid="uid://dkyd8fnsnmkla" path="res://assets/audio/se/beep.wav" id="11_beu3v"]
+[ext_resource type="AudioStream" uid="uid://c0ycl5nwpycob" path="res://assets/audio/bgm/room.ogg" id="12_kayh1"]
+[ext_resource type="AudioStream" uid="uid://25oygyy78drh" path="res://assets/audio/bgm/room2.ogg" id="13_40hy2"]
 
 [sub_resource type="GDScript" id="GDScript_j0p1s"]
 script/source = "extends Control
@@ -71,6 +73,7 @@ func take_step():
 	print(\"Current World Position: \"+var_to_str(player.stats.cur_pos))
 		
 func _ready():
+	music.play_bgm() # เล่นเพลง bgm ตรงนี้
 	random.randomize()
 	input.grab_focus()
 #	get_event($Events.events.ev_start)
@@ -242,5 +245,13 @@ script = ExtResource("10_ea2c1")
 
 [node name="beep" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("11_beu3v")
+
+[node name="room0" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("12_kayh1")
+volume_db = -15.0
+
+[node name="room1" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("13_40hy2")
+volume_db = -15.0
 
 [connection signal="text_changed" from="Input" to="." method="_on_input_text_changed"]

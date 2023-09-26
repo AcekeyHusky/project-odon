@@ -1,6 +1,8 @@
 extends Node
 
 var is_se_playing = false
+var is_bgm_playing = false
+var cur_room_bgm = "room0" #ชื่อเพลงที่จะเล่นตามห้อง
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,4 +17,9 @@ func play_se_typing():
 		return
 	$beep.play()
 	is_se_playing = true
-	
+
+func play_bgm(): #เล่นเพลง bgm
+	if (is_bgm_playing):
+		return
+	get_node(cur_room_bgm).play()
+	is_bgm_playing = true
