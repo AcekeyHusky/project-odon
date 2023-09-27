@@ -8,4 +8,3 @@ func _init():
 
 func fun():
 	game.printf("จุ๊ๆ ไม่เอา ไม่พูด")
-	print(key)

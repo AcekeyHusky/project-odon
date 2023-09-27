@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://mpjlxjskprpi"]
+[gd_scene load_steps=22 format=3 uid="uid://mpjlxjskprpi"]
 
 [ext_resource type="Resource" uid="uid://biey88r7gg4yc" path="res://database/rooms/Room001.tres" id="2_kmuac"]
 [ext_resource type="Theme" uid="uid://b0deih8fdao70" path="res://assets/themes/theme_01.tres" id="3_ep55m"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://balihp4qfx0hg" path="res://scenes/commands.tscn" id="5_1teoh"]
 [ext_resource type="Script" path="res://scripts/Events.gd" id="6_axqxg"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextRoom.gd" id="6_gbbsh"]
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextThings.gd" id="7_ijssd"]
 [ext_resource type="Script" path="res://scripts/Places.gd" id="7_sldi0"]
 [ext_resource type="Script" path="res://scripts/Node2D.gd" id="8_pbxnv"]
 [ext_resource type="Script" path="res://scripts/Music.gd" id="10_ea2c1"]
@@ -17,7 +18,6 @@
 script/source = "extends Control
 @onready var game = self
 @onready var player = $Player
-@onready var world = $World
 @onready var logs = $ScrollContainer/VBoxContainer/Logs
 @onready var input = $Input
 @onready var settings = $Settings
@@ -127,6 +127,9 @@ script = ExtResource("12_6dn7u")
 [sub_resource type="RichTextEffect" id="RichTextEffect_im0tk"]
 script = ExtResource("6_gbbsh")
 
+[sub_resource type="RichTextEffect" id="RichTextEffect_377yp"]
+script = ExtResource("7_ijssd")
+
 [sub_resource type="GDScript" id="GDScript_82uow"]
 script/source = "extends Node
 
@@ -149,6 +152,9 @@ script = ExtResource("12_6dn7u")
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_57pxg"]
 script = ExtResource("6_gbbsh")
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_mrx6c"]
+script = ExtResource("7_ijssd")
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -194,7 +200,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 fit_content = true
 scroll_following = true
-custom_effects = [SubResource("RichTextEffect_q0mw6"), SubResource("RichTextEffect_im0tk")]
+custom_effects = [SubResource("RichTextEffect_q0mw6"), SubResource("RichTextEffect_im0tk"), SubResource("RichTextEffect_377yp")]
 threaded = true
 visible_characters_behavior = 1
 
@@ -261,7 +267,7 @@ theme_override_font_sizes/mono_font_size = 40
 bbcode_enabled = true
 text = "[command]ตัวอย่างจ้าอู่ญู้ป่นปี้สระอี๊ฤู"
 scroll_active = false
-custom_effects = [SubResource("RichTextEffect_rjs01"), SubResource("RichTextEffect_57pxg")]
+custom_effects = [SubResource("RichTextEffect_rjs01"), SubResource("RichTextEffect_57pxg"), SubResource("RichTextEffect_mrx6c")]
 
 [node name="GreaterThan" type="Label" parent="."]
 layout_mode = 2
