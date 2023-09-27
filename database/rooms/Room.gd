@@ -1,12 +1,13 @@
 extends Resource
 class_name Room
 
+
 @export var name:String
 @export_multiline var description:String
 
-@export var things_in_room:Dictionary
+@export var things: Dictionary
 
-# Direction
+@export_group("Direction Path")
 @export_file var north_west: String
 @export_file var north: String
 @export_file var north_east : String
@@ -17,6 +18,8 @@ class_name Room
 @export_file var south_east: String
 @export_file var up: String
 @export_file var down: String
+
+
 
 @export var source: Script
 
@@ -84,10 +87,10 @@ func look_something(thing:String):
 	if RoomScript && RoomScript.has_method("look_something"):
 		RoomScript.call("look_something",thing)
 	else:
-		if things_in_room.has(thing) :
-			Printf(things_in_room.get(thing))
+		if things.has(thing) :
+			Printf(things.get(thing))
 		else:
-			print(things_in_room.has(thing))
+			print(things.has(thing))
 			Printf("ดูเหมือนว่าจะไม่มี \""+thing+"\" อยู่ที่นี่")
 			
 func Printf(msg : String):

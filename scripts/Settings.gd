@@ -2,7 +2,7 @@ extends Node
 
 var textColor = "#ffffff"
 var BGColor = "#000000"
-var dev_mode = true
+var dev_mode = false
 var text_color = {
 	"command" = "yellow"
 

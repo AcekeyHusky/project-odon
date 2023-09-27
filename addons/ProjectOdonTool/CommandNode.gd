@@ -18,6 +18,6 @@ var words: Array
 func fun():
 	game.printf("สวัสดี")
 	
-func excute(input: Array):
+func exec(input: Array):
 	words = input
 	fun()

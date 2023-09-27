@@ -6,9 +6,14 @@
 script = ExtResource("1_2qcwd")
 name = "โถงทางเดิน 2"
 description = "โถงทางเดินที่ยาวไปสุดลูกหูลูกตา แต่พอเดืนมาถึงนี่ถึงกลับกลายเป็นทางตัน ดูเหมือนทางเดียวที่จะไปได้คือ \"ใต้\" เสียแล้วสิ"
+things_in_room = {}
+north_west = ""
 north = ""
-south = "res://scripts/database/Room/Room002.tres"
-east = ""
+north_east = ""
 west = ""
+east = ""
+south_west = ""
+south = "res://database/rooms/Room002.tres"
+south_east = ""
 up = ""
 down = ""

@@ -47,7 +47,7 @@ func process_input(input):
 		print(cmd)
 		print(words[0])
 		print(words)
-		cmd.excute(words)
+		cmd.exec(words)
 	else:
 		game.printf("[color=red]ไม่พบคำสั่งที่คุณใช้ กรุณาพิมพ์[/color] [command]ช่วย[/command]")	
 	
@@ -113,7 +113,6 @@ func slice_word(word: String, key_lists: Array) -> Array:
 				break
 
 		if not found_key:
-			# If no key is found, append the remaining part of the word and break the loop
 			slices.append(word.substr(i))
 			break
 

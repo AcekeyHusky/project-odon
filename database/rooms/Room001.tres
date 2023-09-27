@@ -1,13 +1,16 @@
-[gd_resource type="Resource" script_class="Room" load_steps=3 format=3 uid="uid://biey88r7gg4yc"]
+[gd_resource type="Resource" script_class="Room" load_steps=4 format=3 uid="uid://biey88r7gg4yc"]
 
 [ext_resource type="Script" path="res://database/rooms/Room.gd" id="1_4ntec"]
 [ext_resource type="Script" path="res://database/rooms/Room001.gd" id="2_nbme5"]
+[ext_resource type="Resource" uid="uid://brwxdugqw30yr" path="res://database/things/Book.tres" id="3_ga64b"]
 
 [resource]
 script = ExtResource("1_4ntec")
 name = "ห้องสมุด"
 description = "ห้องสมุดที่มีแต่หนังสือ ไม่มีสมุด"
-things_in_room = {}
+things = {
+"Book": ExtResource("3_ga64b")
+}
 north_west = ""
 north = "res://database/rooms/Room002.tres"
 north_east = ""
