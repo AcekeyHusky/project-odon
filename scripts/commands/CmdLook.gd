@@ -6,15 +6,15 @@
 	ดู<สมช>
 	ดู<วัตถุ>
 """
-extends Node
-@onready var game = $"../.."
+extends Command
 
-var key = "ดู"
-var aliases = ["เบิ่ง"]
+func _init():
+	key = "ดู"
+	aliases = ["เบิ่ง"]
 
-func fun(_args):
-	if _args.size() > 1 :
-		game.current_room.look_something(_args[1])
+func fun():
+	if words.size() > 1 :
+		game.current_room.look_something(words[1])
 	else:
 		game.current_room.look()
 	

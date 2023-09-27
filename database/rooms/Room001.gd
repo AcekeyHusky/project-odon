@@ -10,8 +10,8 @@ func can_pass(dir:String)->bool:
 			
 func start(_args=[]):
 	Printf("คุณตื่นขึ้นมาที่ไหนไม่รู้ สภาพของห้องดูเหมือนจะมีแค่ไฟสลัวๆ ไม่ค่อยเห็นอะไรมากนัก")
-	Printf("บางทีการดูรอบๆ อาจจะเห็นอะไรมากขึ้นก็ได้นะ")
-	Printf("พิมพ์ 'ดู' แล้วกด Enter เพื่อสำรวจ")
+	Printf("บางทีการ[command]ดู[/command]รอบๆ อาจจะเห็นอะไรมากขึ้นก็ได้นะ")
+	# Printf("พิมพ์ [command]ดู[/command] แล้วกด Enter เพื่อสำรวจ")
 
 # event ตอนเข้าห้อง
 func enter_room(_args=[]):
