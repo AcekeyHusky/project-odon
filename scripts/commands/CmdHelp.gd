@@ -1,10 +1,7 @@
 """
 คำสั่ง 'ช่วย'
 """
-extends Node
-@onready var game = $"../.."
-
-var key = "ช่วย"
+extends Command
 
 var commands_list = [
 	{
@@ -59,7 +56,10 @@ var commands_list = [
 	# เพิ่มต่อให้ครบด้วยจ้า.....
 ]
 
-func fun(_args):
+func _init():
+	key = "ช่วย"
+
+func fun():
 	game.printf("ดูเหมือนว่าคุณจะสามารถทำสิ่งต่อไปนี้ได้.....")
 	for _cmd in commands_list.filter(func(item): return item['visible_in_help'] == true ):
 		var _display_cmd = ""

@@ -24,6 +24,10 @@ window/size/resizable=false
 
 project/assembly_name="Rl"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/projectodontool/plugin.cfg")
+
 [input]
 
 ui_accept={

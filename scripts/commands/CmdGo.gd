@@ -1,26 +1,37 @@
-extends Node
-@onready var game = $"../.."
+"""
+ย้าย Room
 
-var key = "ไป"
+วิธีใช้:
+ไป<ทิศ>
+ไป <ทิศ>
 
-func fun(_args:Array[String]):
-	if _args.size() > 1:
-		var dir = _args[1]
+เช่น ไปเหนือ, ไป อ
+
+"""
+extends Command
+
+var msg_failed = "[color=red]ไปไหนดีน้าาาา คุณคิดกับตัวเอง.....[/color]"
+
+func _init():
+	key = "ไป"
+
+func fun():
+	if words.size() > 1:
+		var dir = words[1]
 		match dir:
-			"เหนือ","north","n":
+			"เหนือ","น", "north", "n":
 				game.go_to_room("north")
-			"ใต้","south","s":
+			"ใต้", "ต" ,"south","s":
 				game.go_to_room("south")
-			"ออก","ตะวันอออก","east","e":
+			"ตะวันออก", "ออก", "อ", "ตะวันอออก","east","e":
 				game.go_to_room("east")
-			"ตก","ตะวันตก","west","w":
+			"ตะวันตก", "ตก", "ตต","ตะวันตก","west","w":
 				game.go_to_room("west")
-			"ขึ้น","up","u":
+			"ขึ้น", "ข","up","u":
 				game.go_to_room("up")
-			"ลง","down","d":
+			"ลง", "ล","down","d":
 				game.go_to_room("down")
 			_:
-				game.printf("ไปไหนดัีน้าาา คุณคิดกับตัวเอง....")
-		
+				game.printf(msg_failed)
 	else:
-		game.printf("ไปไหนดัีน้าาา คุณคิดกับตัวเอง....")
+		game.printf(msg_failed)

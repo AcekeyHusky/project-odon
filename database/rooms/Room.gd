@@ -6,16 +6,19 @@ class_name Room
 
 @export var things_in_room:Dictionary
 
+# Direction
+@export_file var north_west: String
 @export_file var north: String
-@export_file var south: String
-@export_file var east: String
+@export_file var north_east : String
 @export_file var west: String
+@export_file var east: String
+@export_file var south_west: String
+@export_file var south: String
+@export_file var south_east: String
 @export_file var up: String
 @export_file var down: String
 
-
 @export var source: Script
-
 
 var RoomScript : Node
 
@@ -31,8 +34,6 @@ func init_script():
 		RoomScript = source.new()
 		RoomScript.set_get_data(get_data)
 		RoomScript.connect("printf",_on_printf)
-	
-	
 
 # รัน event จาก script
 func exec(method:String,arg=[]):
@@ -75,7 +76,7 @@ func enter_room():
 	if RoomScript && RoomScript.has_method("enter_room"):
 		RoomScript.call("enter_room")
 	else:
-		Printf("เข้ามายัง "+ name)
+		Printf("เข้ามายัง[room]%s[/room]" % name)
 		
 func look_something(thing:String):
 	init_script()
