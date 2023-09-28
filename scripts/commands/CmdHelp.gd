@@ -69,3 +69,4 @@ func fun():
 			_display_cmd = _cmd.cmd
 		#game.printf( "- %s ( %s )" % [ _display_cmd, _cmd.desc ] )
 		game.printf( "- [hint=%s]%s[/hint]" % [ _cmd.desc, _display_cmd ])
+	

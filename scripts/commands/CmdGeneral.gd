@@ -10,6 +10,7 @@ class CmdClear extends Command:
 		key = "ล้าง"
 	func fun():
 		logs.clear()
+		logs.visible_characters = 0
 
 class CmdRest extends Command:
 	func _init():

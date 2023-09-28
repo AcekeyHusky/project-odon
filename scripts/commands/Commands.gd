@@ -4,7 +4,7 @@ extends Node
 @onready var logs = get_node("../ScrollContainer/VBoxContainer/Logs")
 @onready var settings = get_node("../Settings")
 @onready var history = get_node("../CommandHistory")
-@onready var finput = $"../FakeInput"
+@onready var finput = $"../FakeInputContainer/FakeInput"
 @onready var commands = self
 
 var command_hash: Dictionary = {}

@@ -9,7 +9,7 @@ class_name Command
 @onready var commands = ".."
 
 var key: = "KEY"
-var description: String
+var desc: String # description
 var aliases: Array # Key ทางเลือก
 var is_help_visible: bool = true
 var is_can_use: bool = true
