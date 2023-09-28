@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://mpjlxjskprpi"]
+[gd_scene load_steps=24 format=3 uid="uid://mpjlxjskprpi"]
 
 [ext_resource type="Resource" uid="uid://biey88r7gg4yc" path="res://database/rooms/Room001.tres" id="2_kmuac"]
 [ext_resource type="Theme" uid="uid://b0deih8fdao70" path="res://assets/themes/theme_01.tres" id="3_ep55m"]
@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://dkyd8fnsnmkla" path="res://assets/audio/se/beep.wav" id="11_beu3v"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextCommand.gd" id="12_6dn7u"]
 [ext_resource type="AudioStream" uid="uid://drgq52yw8j31r" path="res://assets/audio/bgm/room1.mp3" id="12_lkolt"]
+[ext_resource type="Script" path="res://scripts/MapController.gd" id="14_46rgl"]
+[ext_resource type="PackedScene" uid="uid://cnamp2jhroeno" path="res://scenes/map_tile.tscn" id="15_iqf6m"]
 
 [sub_resource type="GDScript" id="GDScript_j0p1s"]
 script/source = "extends Control
@@ -25,8 +27,10 @@ script/source = "extends Control
 @onready var commandHistory = $CommandHistory
 @onready var music = $Music
 @onready var finput = $FakeInput
+@onready var map = $Layout/HBoxContainer/SubViewportContainer/Map
 
 @export var current_room : Room
+
 
 var room_env: String
 var random = RandomNumberGenerator.new()
@@ -108,12 +112,16 @@ func go_to_room(dir:String):
 		current_room.connect(\"printf\",printf)
 		player.stats.tired -= 1
 		current_room.enter_room()
+		map.on_room_change(dir)
 	else:
 		print(\"cannot go \",dir)
 	pass
 
 func _on_input_text_changed():
-	var match_command = commands.command_history.filter(func(text): return text.begins_with(input.text))
+	var merge_command = current_room.command_keywords
+	merge_command.append_array(commands.command_history)
+	
+	var match_command = merge_command.filter(func(text): return text.begins_with(input.text))
 	commandHistory.text = \"\"
 	if match_command.size() > 0 :
 		var command_text = match_command[0]
@@ -180,7 +188,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = 16.0
+offset_top = 418.0
 offset_right = -16.0
 offset_bottom = -72.0
 grow_horizontal = 2
@@ -196,7 +204,7 @@ layout_mode = 2
 size_flags_vertical = 3
 auto_translate = false
 localize_numeral_system = false
-theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 fit_content = true
 scroll_following = true
@@ -277,5 +285,68 @@ offset_right = 38.0
 offset_bottom = 638.0
 theme_override_font_sizes/font_size = 40
 text = " >"
+
+[node name="Layout" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 440.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Layout"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 400.0
+grow_horizontal = 2
+
+[node name="Left" type="Panel" parent="Layout/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Layout/HBoxContainer/Left"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Layout/HBoxContainer/Left/VBoxContainer"]
+layout_mode = 2
+text = "<placeholder (Player Stats)>"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Layout/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Map" type="SubViewport" parent="Layout/HBoxContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(512, 400)
+render_target_update_mode = 4
+script = ExtResource("14_46rgl")
+
+[node name="Camera2D" type="Camera2D" parent="Layout/HBoxContainer/SubViewportContainer/Map"]
+zoom = Vector2(1.8, 1.8)
+
+[node name="MapTile" parent="Layout/HBoxContainer/SubViewportContainer/Map" instance=ExtResource("15_iqf6m")]
+offset_left = -272.0
+offset_top = -216.0
+offset_right = -240.0
+offset_bottom = -184.0
+
+[node name="Label" type="Label" parent="Layout/HBoxContainer/SubViewportContainer/Map"]
+offset_left = -19.0
+offset_top = -11.0
+offset_right = 21.0
+offset_bottom = 15.0
+text = "*"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Right" type="Panel" parent="Layout/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Layout/HBoxContainer/Right"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 26.0
+text = "<placeholder (Inventory)>"
 
 [connection signal="text_changed" from="Input" to="." method="_on_input_text_changed"]
