@@ -1,5 +1,10 @@
 # Changelog
 
+## 28/09/2023
+fransbell:
+- เพิ่มระบบแผนที่ viewport map
+- เพิ่มระบบ auto-complete command ตามของแต่ละห้อง
+
 ## 27/09/2023
 slost:
 - ย้าย Changelog ไป CHANGELOG.md

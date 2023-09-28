@@ -6,6 +6,7 @@ class_name Room
 @export_multiline var description:String
 
 @export var things: Dictionary
+@export var command_keywords: Array = []
 
 @export_group("Direction Path")
 @export_file var north_west: String
@@ -19,9 +20,9 @@ class_name Room
 @export_file var up: String
 @export_file var down: String
 
-
-
 @export var source: Script
+
+
 
 var RoomScript : Node
 
