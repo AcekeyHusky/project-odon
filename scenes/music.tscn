@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://diocpp02ookyp"]
+[gd_scene load_steps=5 format=3 uid="uid://diocpp02ookyp"]
 
 [ext_resource type="Script" path="res://scripts/Music.gd" id="1_3ggey"]
 [ext_resource type="AudioStream" uid="uid://dkyd8fnsnmkla" path="res://assets/audio/se/beep.wav" id="2_k8h1n"]
 [ext_resource type="AudioStream" uid="uid://drgq52yw8j31r" path="res://assets/audio/bgm/room1.mp3" id="3_nstet"]
+[ext_resource type="AudioStream" uid="uid://uvaoa1ra3s7o" path="res://assets/audio/bgm/battle.mp3" id="4_30asi"]
 
 [node name="Music" type="Node"]
 script = ExtResource("1_3ggey")
@@ -13,3 +14,7 @@ stream = ExtResource("2_k8h1n")
 [node name="room1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_nstet")
 volume_db = -15.0
+
+[node name="battle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_30asi")
+volume_db = -20.0
