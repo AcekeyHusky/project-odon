@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Room" load_steps=2 format=3 uid="uid://dpox1yfxvhvkw"]
 
-[ext_resource type="Script" path="res://database/rooms/Room.gd" id="1_2qcwd"]
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Room.gd" id="1_2qcwd"]
 
 [resource]
 script = ExtResource("1_2qcwd")

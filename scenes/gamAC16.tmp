@@ -1,18 +1,133 @@
-[gd_scene load_steps=22 format=3 uid="uid://mpjlxjskprpi"]
+[gd_scene load_steps=23 format=3 uid="uid://mpjlxjskprpi"]
 
-[ext_resource type="Script" path="res://scripts/Game.gd" id="2_pu7fn"]
+[ext_resource type="Resource" uid="uid://biey88r7gg4yc" path="res://database/rooms/Room001.tres" id="2_kmuac"]
 [ext_resource type="Theme" uid="uid://b0deih8fdao70" path="res://assets/themes/theme_01.tres" id="3_ep55m"]
-[ext_resource type="Resource" uid="uid://biey88r7gg4yc" path="res://database/rooms/Room001.tres" id="3_p4fyk"]
 [ext_resource type="Script" path="res://scripts/Settings.gd" id="4_bhwpl"]
 [ext_resource type="PackedScene" uid="uid://balihp4qfx0hg" path="res://scenes/commands.tscn" id="5_1teoh"]
+[ext_resource type="Script" path="res://scripts/Events.gd" id="6_axqxg"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextRoom.gd" id="6_gbbsh"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextThings.gd" id="7_ijssd"]
-[ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextDirection.gd" id="8_euvg3"]
+[ext_resource type="Script" path="res://scripts/Places.gd" id="7_sldi0"]
 [ext_resource type="Script" path="res://scripts/Node2D.gd" id="8_pbxnv"]
 [ext_resource type="PackedScene" uid="uid://diocpp02ookyp" path="res://scenes/music.tscn" id="11_cry38"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextCommand.gd" id="12_6dn7u"]
 [ext_resource type="Script" path="res://scripts/MapController.gd" id="14_46rgl"]
+[ext_resource type="Script" path="res://scenes/GameController.gd" id="14_tab4p"]
 [ext_resource type="PackedScene" uid="uid://cnamp2jhroeno" path="res://scenes/map_tile.tscn" id="15_iqf6m"]
+
+[sub_resource type="GDScript" id="GDScript_j0p1s"]
+script/source = "extends Node
+
+@onready var game = self
+@onready var player = $Player
+@onready var logs = $ScrollContainer/VBoxContainer/Logs
+@onready var input = $Input
+@onready var settings = $Settings
+@onready var commands = $CommandHandler
+@onready var commandHistory = $CommandHistory
+@onready var music = $Music
+@onready var finput = $FakeInputContainer/FakeInput
+@onready var map = $Layout/SubViewportContainer/Map
+
+@export var current_room : Room
+
+
+var room_env: String
+var random = RandomNumberGenerator.new()
+var current_logs: String
+
+\"\"\"
+func get_place(place):
+	var places_data = $Places.places
+	if place in places_data:
+		var place_info = places_data[place]
+		max_room = place_info[\"rooms\"]
+		print(place_info[\"env_msg\"])
+		room_env = place_info[\"env_msg\"]
+\"\"\"
+
+func tell(text):
+	#ใช้ append_text แทน add_text เพื่อให้สามารถใช้ bbcode ได้
+	if logs.get_parsed_text() != \"\":
+		logs.append_text(\"\\n\"+text)
+	else:
+		logs.append_text(text)
+	await get_tree().create_timer(0.1).timeout
+	_scroll_bottom()
+	
+	print(current_logs)
+
+func _ready():
+	finput.text = \"\"
+	music.play_bgm() # เล่นเพลง bgm ตรงนี้
+	random.randomize()
+	input.grab_focus()
+	if current_room :
+		current_room.connect(\"tell\",tell)
+		current_room.exec(\"start\")
+	
+func _process(_delta):
+	logs.modulate = $Settings.textColor
+	if Input.is_action_just_pressed(\"enter\") and input.text != \"\":
+		_on_input_entered()
+		
+	if Input.is_action_just_pressed(\"ui_right\") and commandHistory.text.length() > 0:
+		input.text=\"\"
+		input.insert_text_at_caret(commandHistory.text)
+	
+	if !settings.dev_mode:
+		# อนิเมท ข้อความขึ้นาทีละตัว
+		if(logs.get_total_character_count() > logs.visible_characters):
+			logs.visible_characters += 1
+			music.play_se_typing()
+	
+func can_pass():
+	# if no_enemy_block
+		return true
+		
+func take_step():
+	player.stats.tired -= 1
+	tell(\"คุณเดินหน้าต่อไปอีกก้าว\")
+	player.stats.cur_pos += 1
+	# tell(\"คุณยังคงอยู่ใน \"+cur_place)
+	if random.randf_range(0,1) >= 0.5:	
+		tell($Events.events.found_enemy.msg0)
+	print(\"Current World Position: \"+var_to_str(player.stats.cur_pos))
+		
+func _scroll_bottom():
+	$ScrollContainer.scroll_vertical = $ScrollContainer.get_v_scroll_bar().max_value
+	pass
+
+func _on_input_entered():
+		commands.process_input(input.text)
+		input.clear()
+		finput.clear()
+		commandHistory.text = \"\"	
+
+func go_to_room(dir:String):
+	var target = game.current_room.go_to_dir(dir)
+	
+	if target:
+		current_room = load(target)
+		current_room.connect(\"tell\",tell)
+		player.stats.tired -= 1
+		current_room.enter_room()
+		map.on_room_change(dir)
+	else:
+		print(\"cannot go \",dir)
+	pass
+
+func _on_input_text_changed():
+	var merge_command = current_room.command_keywords
+	merge_command.append_array(commands.command_history)
+	
+	var match_command = merge_command.filter(func(text): return text.begins_with(input.text))
+	commandHistory.text = \"\"
+	if match_command.size() > 0 :
+		var command_text = match_command[0]
+		commandHistory.text = command_text
+	commands.fake_input()
+"
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_q0mw6"]
 script = ExtResource("12_6dn7u")
@@ -23,8 +138,22 @@ script = ExtResource("6_gbbsh")
 [sub_resource type="RichTextEffect" id="RichTextEffect_377yp"]
 script = ExtResource("7_ijssd")
 
-[sub_resource type="RichTextEffect" id="RichTextEffect_dvkiy"]
-script = ExtResource("8_euvg3")
+[sub_resource type="GDScript" id="GDScript_82uow"]
+script/source = "extends Node
+
+var stats = {
+	\"hp\" : 10,
+	\"nick\" : \"jo\",
+	\"tired\" : 100,
+	\"cur_pos\" : 0,
+}
+
+var inventory = {
+	\"gold\" : 0,
+	\"rock\" : 0,
+	\"stick\" : 0
+}
+"
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_rjs01"]
 script = ExtResource("12_6dn7u")
@@ -35,9 +164,6 @@ script = ExtResource("6_gbbsh")
 [sub_resource type="RichTextEffect" id="RichTextEffect_mrx6c"]
 script = ExtResource("7_ijssd")
 
-[sub_resource type="RichTextEffect" id="RichTextEffect_uq07h"]
-script = ExtResource("8_euvg3")
-
 [node name="Game" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -47,8 +173,8 @@ grow_horizontal = 2
 grow_vertical = 2
 auto_translate = false
 theme = ExtResource("3_ep55m")
-script = ExtResource("2_pu7fn")
-here = ExtResource("3_p4fyk")
+script = SubResource("GDScript_j0p1s")
+current_room = ExtResource("2_kmuac")
 
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("8_pbxnv")
@@ -63,8 +189,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = -391.0
-offset_bottom = -73.0
+offset_right = -400.0
+offset_bottom = -88.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -82,7 +208,7 @@ theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 fit_content = true
 scroll_following = true
-custom_effects = [SubResource("RichTextEffect_q0mw6"), SubResource("RichTextEffect_im0tk"), SubResource("RichTextEffect_377yp"), SubResource("RichTextEffect_dvkiy")]
+custom_effects = [SubResource("RichTextEffect_q0mw6"), SubResource("RichTextEffect_im0tk"), SubResource("RichTextEffect_377yp")]
 threaded = true
 visible_characters_behavior = 1
 
@@ -94,7 +220,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = -24.0
+offset_right = -384.0
 offset_bottom = 59.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -115,7 +241,16 @@ theme_override_colors/font_color = Color(1, 1, 1, 0.321569)
 theme_override_font_sizes/font_size = 26
 vertical_alignment = 1
 
+[node name="Player" type="Node" parent="."]
+script = SubResource("GDScript_82uow")
+
 [node name="CommandHandler" parent="." instance=ExtResource("5_1teoh")]
+
+[node name="Events" type="Node" parent="."]
+script = ExtResource("6_axqxg")
+
+[node name="Places" type="Node" parent="."]
+script = ExtResource("7_sldi0")
 
 [node name="Music" parent="." instance=ExtResource("11_cry38")]
 
@@ -132,14 +267,14 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/normal_font_size = 26
 bbcode_enabled = true
-text = "[cmd]ตัวอย่างจ้าอู่ญู้ป่นปี้สระอี๊ฤู"
+text = "[command]ตัวอย่างจ้าอู่ญู้ป่นปี้สระอี๊ฤู"
 fit_content = true
 scroll_active = false
-custom_effects = [SubResource("RichTextEffect_rjs01"), SubResource("RichTextEffect_57pxg"), SubResource("RichTextEffect_mrx6c"), SubResource("RichTextEffect_uq07h")]
+custom_effects = [SubResource("RichTextEffect_rjs01"), SubResource("RichTextEffect_57pxg"), SubResource("RichTextEffect_mrx6c")]
 threaded = true
 
 [node name="GreaterThan" type="Label" parent="."]
-layout_mode = 0
+layout_mode = 2
 offset_top = 576.0
 offset_right = 40.0
 offset_bottom = 648.0
@@ -148,7 +283,6 @@ text = " >"
 vertical_alignment = 1
 
 [node name="Layout" type="Control" parent="."]
-layout_mode = 3
 anchors_preset = 0
 offset_left = 768.0
 offset_right = 1152.0
@@ -220,5 +354,8 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 26.0
 text = "<placeholder (Inventory)>"
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("14_tab4p")
 
 [connection signal="text_changed" from="Input" to="." method="_on_input_text_changed"]

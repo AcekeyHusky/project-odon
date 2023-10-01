@@ -1,16 +1,11 @@
 [gd_resource type="Resource" script_class="Room" load_steps=4 format=3 uid="uid://biey88r7gg4yc"]
 
-[ext_resource type="Script" path="res://database/rooms/Room.gd" id="1_4ntec"]
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Room.gd" id="1_4ntec"]
+[ext_resource type="Resource" uid="uid://brwxdugqw30yr" path="res://database/items/Book.tres" id="1_upv18"]
 [ext_resource type="Script" path="res://database/rooms/Room001.gd" id="2_nbme5"]
-[ext_resource type="Resource" uid="uid://brwxdugqw30yr" path="res://database/things/Book.tres" id="3_ga64b"]
 
 [resource]
 script = ExtResource("1_4ntec")
-name = "ห้องสมุด"
-description = "ห้องสมุดที่มีแต่หนังสือ ไม่มีสมุด"
-things = {
-"Book": ExtResource("3_ga64b")
-}
 command_keywords = ["ดู", "ดูหนังสือ", "ดูโต๊ะ", "ดูชั้นหนังสือ", "ไปเหนือ"]
 north_west = ""
 north = "res://database/rooms/Room002.tres"
@@ -22,4 +17,9 @@ south = ""
 south_east = ""
 up = ""
 down = ""
+name = "ห้องสมุด"
+description = "ห้องสมุดที่มีแต่หนังสือ ไม่มีสมุด"
+aliases = ["ห้องอ่านหนังสือ"]
+adjective = []
+contents = [ExtResource("1_upv18")]
 source = ExtResource("2_nbme5")

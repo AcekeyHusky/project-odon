@@ -3,8 +3,8 @@ extends EditorPlugin
 
 
 func _enter_tree():
-	# Add custom Command node (Icon is placeholder)
-	add_custom_type("Command","Node",preload("CommandNode.gd"),preload("res://icon.svg"))
+	add_custom_type("Command", "Node", preload("CustomType/CommandType.gd")
+	, preload("res://assets/icons/command.svg"))
 	pass
 
 

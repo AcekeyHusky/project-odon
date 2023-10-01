@@ -56,17 +56,14 @@ var commands_list = [
 	# เพิ่มต่อให้ครบด้วยจ้า.....
 ]
 
-func _init():
-	key = "ช่วย"
-
 func fun():
-	game.printf("ดูเหมือนว่าคุณจะสามารถทำสิ่งต่อไปนี้ได้.....")
+	game.tell("ดูเหมือนว่าคุณจะสามารถทำสิ่งต่อไปนี้ได้.....")
 	for _cmd in commands_list.filter(func(item): return item['visible_in_help'] == true ):
 		var _display_cmd = ""
 		if ( typeof(_cmd.cmd) == TYPE_ARRAY ):
 			_display_cmd = ", ".join( PackedStringArray(_cmd.cmd) )
 		else:
 			_display_cmd = _cmd.cmd
-		#game.printf( "- %s ( %s )" % [ _display_cmd, _cmd.desc ] )
-		game.printf( "- [hint=%s]%s[/hint]" % [ _cmd.desc, _display_cmd ])
+		#game.tell( "- %s ( %s )" % [ _display_cmd, _cmd.desc ] )
+		game.tell( "- [cmd]%s[/cmd]" % [ _cmd.desc, _display_cmd ])
 	

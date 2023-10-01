@@ -26,7 +26,11 @@ project/assembly_name="Rl"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/projectodontool/plugin.cfg")
+enabled=PackedStringArray("res://addons/ProjectOdonTool/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 
