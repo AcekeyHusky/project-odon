@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Things" load_steps=2 format=3 uid="uid://brwxdugqw30yr"]
-
-[ext_resource type="Script" path="res://database/things/Things.gd" id="1_7k7vd"]
-
-[resource]
-script = ExtResource("1_7k7vd")
-name = "หนังสือ"
-description = "หนังสือเก่า ๆ ที่มีรอยฝุ่นเปื้อน ปกหนังสือทำจากหนังสีดำกลิบ มันไม่มีรูปภาพหรือข้อความใดปรากฏ คุณรู้สึกสงสัยว่าข้างในนั้นมันจะมีอะไรให้[command]อ่าน[/command]"

@@ -1,9 +1,10 @@
+@icon("res://assets/icons/console.svg")
 extends Node
-@onready var game = get_node("..")
-@onready var player = get_node("../Player")
-@onready var logs = get_node("../ScrollContainer/VBoxContainer/Logs")
-@onready var settings = get_node("../Settings")
-@onready var history = get_node("../CommandHistory")
+# อาจจะสร้างขึ้นมาเป็นคลาสแยก
+
+@onready var game = $".."
+@onready var logs = $"../ScrollContainer/VBoxContainer/Logs"
+@onready var history = $"../CommandHistory"
 @onready var finput = $"../FakeInputContainer/FakeInput"
 @onready var commands = self
 
@@ -11,75 +12,73 @@ var command_hash: Dictionary = {}
 var command_history: Array[String] = []
 var cmd: Command
 var words: Array
+var cmd_keys = []
 
-func fake_input():
+func fake_input(): ## TODO
 	# ระบบใส่ bbcode ให้ FakeInput
 	var itext = game.input.text
-	var found_key = false
 	words = parse(itext, [cmd_keys])
 	for child in get_children():
 		var ck = child.get("key")
 		if ck == itext:
-			found_key = true
 			break
-	if words.size() > 0 and is_found_key(words[0]):
+	if words.size() > 0 and found_key(words[0]):
 		if words.size() > 1:
-			finput.text = "[command]%s[/command][color=orange]%s[/color]" % [words[0],words[1]]
+			finput.text = "[cmd]%s[/cmd][color=orange]%s[/color]" % [words[0],words[1]]
 		elif words.size() > 0:
-			finput.text = "[command]%s[/command]" % words[0]
+			finput.text = "[cmd]%s[/cmd]" % words[0]
 	else:
 		finput.text = itext
 
 func process_input(input):
-	game.printf("> %s" % finput.text)
-	""" ขอปิดก่อน
-	if game.cur_stage == 1:
-		if !settings.colorCheck(input):
-			game.printf("คุณต้องใส่ค่าสี RGB ก่อน")
-		else:
-			settings.setTextColor(input)
-			game.printf("สีอักษรปัจจุบัน: " + settings.textColor)
-			game.printf("กลับเข้าสู่โหมดเล่นเกมปกติ")
-			game.cur_stage = 0
-	"""
+	game.tell("\n> %s" % finput.text)
 	words = parse(input, [cmd_keys])
-	if is_found_key(words[0]):
+	
+	if found_key(words[0]):
 		print(cmd)
 		print(words[0])
 		print(words)
+		print("")
 		cmd.exec(words)
 	else:
-		game.printf("[color=red]ไม่พบคำสั่งที่คุณใช้ กรุณาพิมพ์[/color] [command]ช่วย[/command]")	
+		game.tell("ไม่พบคำสั่งที่คุณใช้ ลองพิมพ์ [cmd]ช่วย[/cmd] สิ!")	
 	
 	command_hash[input] = true
 	for key in command_hash:
 		if !command_history.has(key):
 			command_history.append(key)
 		
-func is_found_key(_key):
+func found_key(_key: String) -> bool:
 	for child in get_children():
-		var child_key = child.get("key")
-		if child_key == _key:
-			cmd = child
-			return true
-		
-var cmd_keys = []
-
+		if child is Command:
+			var child_key = child.get("key")
+			var child_aliases = child.get("aliases")
+			if child_key == _key or child_aliases.has(_key):
+				cmd = child
+				return true
+	return false
+	
 func create_cmd_list():
 	for child in get_children():
 		if child is Command:
 			var child_key = child.get("key")
+			var child_aliases = child.get("aliases")
 			cmd_keys.append(child.key)
-	print("Current Keys")
+			if child_aliases != []:
+				for i in child_aliases:
+					cmd_keys.append(i)
+	print("Keys ปัจจุบัน")
 	print(cmd_keys)
+	print("")
+	
+func add_CmdGeneral():
+	var cmdg = $CmdGeneral
+	var cmd_set = cmdg.cmd_set
+	for i in cmd_set:
+		add_child(i.new(),true)
 
 func _ready():
-	# เพิ่ม command set จาก CmdGeneral
-	var cmd_set = $CmdGeneral.cmd_set
-	for item in cmd_set:
-		add_child(item.new(),true)
-	
-	# เพิ่ม  key ต่างๆ เข้า cmd_list
+	add_CmdGeneral()
 	create_cmd_list()
 
 # Parsing
@@ -103,7 +102,7 @@ func slice_word(word: String, key_lists: Array) -> Array:
 
 	while i < len(word) and combined_key_list.size() > 0:
 		var found_key = false
-
+		
 		for key in combined_key_list:
 			var key_length = len(key)
 			if word.substr(i, key_length) == key:
