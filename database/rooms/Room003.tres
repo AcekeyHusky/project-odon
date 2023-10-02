@@ -4,9 +4,6 @@
 
 [resource]
 script = ExtResource("1_2qcwd")
-name = "โถงทางเดิน 2"
-description = "โถงทางเดินที่ยาวไปสุดลูกหูลูกตา แต่พอเดืนมาถึงนี่ถึงกลับกลายเป็นทางตัน ดูเหมือนทางเดียวที่จะไปได้คือ \"ใต้\" เสียแล้วสิ"
-things = {}
 command_keywords = ["ไปใต้"]
 north_west = ""
 north = ""
@@ -16,5 +13,10 @@ east = ""
 south_west = ""
 south = "res://database/rooms/Room002.tres"
 south_east = ""
-up = ""
+up = "res://database/rooms/Room004.tres"
 down = ""
+name = "โถงทางเดิน 2"
+description = "โถงทางเดินที่ยาวไปสุดลูกหูลูกตา แต่พอเดืนมาถึงนี่ถึงกลับกลายเป็นทางตัน ดูเหมือนทางเดียวที่จะไปได้คือ \"ใต้\" เสียแล้วสิ"
+aliases = []
+adjective = []
+contents = []

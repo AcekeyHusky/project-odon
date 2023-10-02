@@ -1,4 +1,8 @@
 # Changelog
+## 02/10/2023
+fransbell:
+- เพิ่มระดับ z-level ให้กับ viewport-map
+
 slost:
 - เปลี่ยน desc กลับเป็น description (เพราะต้องใช้ตอน export)
 - สามารถใช้คีย์ทางเลือกได้แล้ว

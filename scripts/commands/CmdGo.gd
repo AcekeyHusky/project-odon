@@ -25,9 +25,9 @@ func fun():
 				game.go_to_room("east")
 			"ตะวันตก", "ตก", "ตต","ตะวันตก":
 				game.go_to_room("west")
-			"ขึ้น", "ข":
+			"ขึ้น", "ข","บน":
 				game.go_to_room("up")
-			"ลง", "ล":
+			"ลง", "ล","ล่าง":
 				game.go_to_room("down")
 			_:
 				game.tell(msg_failed)
