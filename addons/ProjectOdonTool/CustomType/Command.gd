@@ -13,7 +13,7 @@ class_name Command
 ## แสดงใน Help หรือไม่
 @export var is_in_help: bool = true
 ## ตอนนี้ใช้งานได้หรือไม่
-@export var is_can_use: bool = true
+@export var can_use: bool = true
 
 @onready var game = $"../.."
 @onready var player = get_node("../../Player")
@@ -24,7 +24,7 @@ class_name Command
 
 var words: Array
 
-func _int():	
+func _int():
 	var key: = "KEY"
 	var desc: String
 	var aliases: Array

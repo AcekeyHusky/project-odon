@@ -24,6 +24,8 @@ script = ExtResource("9_58p8r")
 
 [node name="CmdHelp" type="Node" parent="."]
 script = ExtResource("3_4dikt")
+text_help_init = "[color=LIGHT_SKY_BLUE]ดูเหมือนว่าคุณจะสามารถทำสิ่งต่อไปนี้ได้.....[/color]"
+text_help_no_desc = "[color=GRAY][i]ไม่มีคำอธิบายสำหรับคำสั่งนี้ :'([/i][/color]"
 key = "ช่วย"
 
 [node name="CmdSettings" type="Node" parent="."]
