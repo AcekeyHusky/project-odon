@@ -62,7 +62,7 @@ var commands_list = [
 
 func fun():
 	game.tell(text_help_init)
-	var cmd_lists :Array = []
+	#var cmd_lists :Array = []
 	for child in get_parent().get_children():
 		if child is Command:
 			# สร้าง key และ aliases
