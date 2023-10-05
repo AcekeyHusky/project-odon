@@ -15,6 +15,7 @@ class_name Thing
 @export var source: Script
 
 @export_group("States")
+@export var is_reveal: bool = true
 @export var is_saw: bool
 
 var _script: Node

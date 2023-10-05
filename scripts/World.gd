@@ -9,6 +9,7 @@ extends Node
 
 @onready var game = $".."
 @onready var map = game.get_node("UI/Layout/SubViewportContainer/Map")
+@onready var commands = game.get_node("CommandHandler")
 
 var rooms: Array = []
 var here: Room
@@ -44,7 +45,7 @@ func rooms_init() -> void:
 func _ready() -> void:
 	rooms_init()
 	debug_room()
-	#on_enter_room(0)
+	update_thing_list()
 	
 func _process(_delta):
 	text_format = {"player":player.name}
@@ -87,12 +88,36 @@ func debug_room() -> void:
 	for i in rooms:
 		print("Rooms %s: %s" % [rooms.find(i), i.name])
 
-func search_thing(_thing):
-	if  here.name == _thing:
-		return here
+func search_thing(_thing: String):
+	return search_thing_from(_thing, here)
+					
+func search_thing_from(_search: String, _from: Thing):
+	if _from.name == _search:
+		return _from
+	
+	if "contents" in _from:
+		var contents = _from.get("contents")
+		
+		for child in contents:
+			if search_thing_from(_search, child) != null:
+				return search_thing_from(_search, child)
+			if ("keys") in child and _search in child.keys:
+				return child
+				
+	return null
+
+func update_thing_list() -> void:
+	commands.thing_list = []
+	var thing_list: Array = []
 	for i in here.contents:
-		if i.name == _thing:
-			return i
-		for ii in i.contents:
-			if ii.name == _thing:
-				return ii
+		commands.thing_list.append(i.name)
+		if i.keys.size() > 0:
+			for id in i.keys:
+				commands.thing_list.append(id)
+		if i.contents.size() > 0:
+			for ii in i.contents:
+				commands.thing_list.append(ii.name)
+				if ii.keys.size() > 0:
+					for id in ii.keys:
+						commands.thing_list.append(id)
+	# แก้ให้มันไม่ซ้อนกันเยอะๆที

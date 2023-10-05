@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://dk6pjwv4bsw7f"]
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://dk6pjwv4bsw7f"]
 
 [ext_resource type="Resource" uid="uid://brwxdugqw30yr" path="res://database/stories/MysteryHouse/Room0-ห้องปริศนา/ii_หนังสือสีดำ.tres" id="1_51rdp"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Item.gd" id="2_h83vj"]
+[ext_resource type="Resource" uid="uid://ccuplmsm6hngw" path="res://database/stories/MysteryHouse/Room0-ห้องปริศนา/ii_หนังสือธรรมดา.tres" id="2_qs3kn"]
 
 [resource]
 script = ExtResource("2_h83vj")
@@ -14,5 +15,6 @@ description = "ตู้หนังสือธรรมดาที่มี�
 ยกเว้น[thing]หนังสือเล่มหนึ่งทีมี่สีดำโดดเด่นกว่าหนังสือเล่มอื่น[/thing]"
 keys = Array[String](["ตู้"])
 adjective = Array[String](["หนังสือ"])
-contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([ExtResource("1_51rdp")])
-is_saw = true
+contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([ExtResource("2_qs3kn"), ExtResource("1_51rdp")])
+is_reveal = true
+is_saw = false

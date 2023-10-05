@@ -14,4 +14,5 @@ description = "โต๊ะไง"
 keys = Array[String](["โต๊ะ"])
 adjective = Array[String](["อ่านหนังสือ"])
 contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([ExtResource("1_1pujj")])
+is_reveal = true
 is_saw = false

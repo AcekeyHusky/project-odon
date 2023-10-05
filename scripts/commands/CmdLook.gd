@@ -15,11 +15,11 @@ func fun():
 		if thing == "ที่นี่":
 			here()
 			return
-		if thing_search and thing_search.is_saw:
+		if thing_search and thing_search.is_reveal:
 			game.tell(thing_search.description)
 			thing_search.is_saw = true	
 			for i in thing_search.contents:
-				i.is_saw = true
+				i.is_reveal = true
 		else:
 			game.tell(Global.text_no_thing % thing)
 	else:

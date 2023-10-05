@@ -13,4 +13,5 @@ description = "เก้าอี้ไง"
 keys = Array[String](["เก้าอี้"])
 adjective = Array[String]([])
 contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([])
-is_saw = true
+is_reveal = true
+is_saw = false

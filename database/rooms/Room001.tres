@@ -23,4 +23,5 @@ keys = Array[String]([])
 adjective = Array[String]([])
 contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([ExtResource("1_7eb4h")])
 source = ExtResource("2_nbme5")
+is_reveal = true
 is_saw = false

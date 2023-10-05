@@ -13,4 +13,5 @@ description = "กระดาษโน๊ตสีขาว มีข้อค�
 keys = Array[String](["กระดาษ", "โน๊ต"])
 adjective = Array[String](["ปริศนา"])
 contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([])
-is_saw = true
+is_reveal = true
+is_saw = false

@@ -17,11 +17,16 @@ var cmd: Command
 var words: Array
 var cmd_list: Array = []
 var dir_list: Array = []
-var key_lists: Array = [cmd_list, dir_list]
+var thing_list: Array = []
+var key_lists: Array = [cmd_list, dir_list, thing_list]
+
+func update_key_lists():
+	key_lists = [cmd_list, dir_list, thing_list]
 
 ## ระบบใส่ bbcode ให้ FakeInput ## TODO
 func faking_input() -> void:
-	var _input_words: Array = parse(input.text, [cmd_list, dir_list])
+	update_key_lists()
+	var _input_words: Array = parse(input.text, key_lists)
 	var _fake_words: Array = ["", "", ""]
 	finput.clear()
 	for i in _input_words:
@@ -29,7 +34,7 @@ func faking_input() -> void:
 			finput.append_text("[cmd]%s[/cmd]" % i)
 		elif Global.get_direction(i):
 			finput.append_text("[dir]%s[/dir]" % i)
-		elif world.search_thing(i) and world.search_thing(i).is_saw:
+		elif world.search_thing(i) and world.search_thing(i).is_reveal:
 			finput.append_text("[thing]%s[/thing]" % i)
 		else:
 			finput.append_text("%s" % i)
@@ -43,6 +48,7 @@ func process_input(_input) -> void:
 		print(cmd)
 		print(words)
 		cmd.exec(words)
+		world.update_thing_list()
 	elif _target:
 		world.go_to_room(_target)
 	else:
@@ -81,6 +87,8 @@ func create_dir_list() -> void:
 	for i in Global.directions.keys():
 		for _dir in Global.directions[i]:
 			dir_list.append(_dir)
+			
+
 	
 func add_CmdGeneral() -> void:
 	var cmdg = $CmdGeneral

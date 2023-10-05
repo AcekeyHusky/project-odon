@@ -71,3 +71,4 @@ func _on_input_text_changed() -> void:
 		var command_text = match_command[0]
 		commandHistory.text = command_text
 	commands.faking_input()
+	

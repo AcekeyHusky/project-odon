@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="Room" load_steps=6 format=3 uid="uid://bm60bmd8ak37j"]
+[gd_resource type="Resource" script_class="Room" load_steps=7 format=3 uid="uid://bm60bmd8ak37j"]
 
 [ext_resource type="Resource" uid="uid://bpjbswokd3uf8" path="res://database/stories/MysteryHouse/Room0-ห้องปริศนา/i_โต๊ะอ่านหนังสือ.tres" id="1_pg1h7"]
 [ext_resource type="Resource" uid="uid://t8trv8pxmlko" path="res://database/stories/MysteryHouse/Room0-ห้องปริศนา/i_เก้าอี้อ่านหนังสือ.tres" id="2_eitgx"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Room.gd" id="3_c7psf"]
 [ext_resource type="Resource" uid="uid://dk6pjwv4bsw7f" path="res://database/stories/MysteryHouse/Room0-ห้องปริศนา/i_ตู้หนังสือ.tres" id="3_fv8kn"]
+[ext_resource type="Resource" uid="uid://d83gkrocwxku" path="res://database/stories/MysteryHouse/Room0-ห้องปริศนา/d_ประตูบานเล็ก.tres" id="4_padcf"]
 [ext_resource type="Script" path="res://database/rooms/Room001.gd" id="4_vjpal"]
 
 [resource]
@@ -13,7 +14,7 @@ north_west = ""
 north = ""
 north_east = ""
 west = ""
-east = "res://database/stories/MysteryHouse/Room1-ห้องนั่งเล่น/ห้องนั่งเล่น.tres"
+east = "res://database/stories/MysteryHouse/Room1-ห้องนั่งเล่น/r_ห้องนั่งเล่น.tres"
 south_west = ""
 south = ""
 south_east = ""
@@ -21,12 +22,13 @@ up = ""
 down = ""
 name = "ห้องอ่านหนังสือ"
 description = "คุณตื่นขึ้นมาในสถานที่ที่คุณไม่รู้จัก
-เมื่อลองมองดีแล้ว ๆ ที่นี่มี[thing]ตู้หนังสือ[/thing]ตั้งเรียงรายอยู่มากมาย
-ที่มุมห้องมี[thing]โต๊ะและเก้าอี้สำหรับอ่านหนังสือ[/thing]
-บนโต๊ะนั้นมี[thing]กระดาษปริศนา[/thing]วางทิ้งไว้
-นอกจากนี้ที่[dir]ทิศตะวันออก[/dir]ยังมี[thing]ประตูบานเล็ก[/thing]ปิดอยู่"
+เมื่อลองมองดีแล้ว ๆ ที่นี่เต็มไปด้วย[thing]ตู้หนังสือไม้ที่บรรจุหนังสือมากมาย[/thing]
+ที่มุมห้องมี[thing]โต๊ะและเก้าอี้พลาสติกสำหรับนั่งอ่านหนังสือ[/thing]
+บนโต๊ะนั้นมี[thing]กระดาษปริศนาสีขาว[/thing]วางทิ้งไว้
+นอกจากนี้ยังมี[thing]ประตูบานเล็ก[/thing]อยู่ทาง[dir]ทิศตะวันออก[/dir]"
 keys = Array[String]([])
 adjective = Array[String]([])
-contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([ExtResource("1_pg1h7"), ExtResource("2_eitgx"), ExtResource("3_fv8kn")])
+contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([ExtResource("1_pg1h7"), ExtResource("2_eitgx"), ExtResource("3_fv8kn"), ExtResource("4_padcf")])
 source = ExtResource("4_vjpal")
+is_reveal = true
 is_saw = false

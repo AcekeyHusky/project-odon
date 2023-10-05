@@ -6,7 +6,7 @@
 script = ExtResource("1_vjj2e")
 name = "ผู้เล่น"
 description = "ช่างดูดีอะไรเยี่ยงนี้"
-keys = Array[String]([])
+keys = Array[String](["ฉัน", "ตัวเอง", "เรา", "อั๊ว", "ข้า", "กู", "me"])
 adjective = Array[String]([])
 contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([])
 is_saw = true

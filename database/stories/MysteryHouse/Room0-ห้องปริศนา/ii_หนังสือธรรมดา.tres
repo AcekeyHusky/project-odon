@@ -5,12 +5,13 @@
 [resource]
 script = ExtResource("1_6vxva")
 weight = 0.0
-can_take = false
+can_take = true
 can_move = false
 can_eat = false
 name = "หนังสือธรรมดา"
 description = "หนังสือธรรมดา ไม่มีอะไรน่าสนใจ"
 keys = Array[String](["หนังสือ"])
-adjective = Array[String]([])
+adjective = Array[String](["ธรรมดา", "ทั่วไป"])
 contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([])
-is_saw = true
+is_reveal = true
+is_saw = false
