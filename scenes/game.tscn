@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://mpjlxjskprpi"]
+[gd_scene load_steps=24 format=3 uid="uid://mpjlxjskprpi"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="2_pu7fn"]
 [ext_resource type="Theme" uid="uid://b0deih8fdao70" path="res://assets/themes/theme_01.tres" id="3_ep55m"]
@@ -14,6 +14,7 @@
 [ext_resource type="FontFile" uid="uid://cxig04e4xx42v" path="res://assets/fonts/TA 8 bit.ttf" id="14_5ptin"]
 [ext_resource type="Script" path="res://scripts/MapController.gd" id="14_46rgl"]
 [ext_resource type="PackedScene" uid="uid://cnamp2jhroeno" path="res://scenes/map_tile.tscn" id="15_iqf6m"]
+[ext_resource type="PackedScene" uid="uid://hjweobkukx31" path="res://scenes/world.tscn" id="15_pngnk"]
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_q0mw6"]
 script = ExtResource("12_6dn7u")
@@ -57,126 +58,56 @@ script = ExtResource("8_pbxnv")
 [node name="Settings" type="Node" parent="."]
 script = ExtResource("4_bhwpl")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = -391.0
-offset_bottom = -73.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Logs" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-auto_translate = false
-localize_numeral_system = false
-theme_override_font_sizes/normal_font_size = 22
-bbcode_enabled = true
-fit_content = true
-scroll_following = true
-custom_effects = [SubResource("RichTextEffect_q0mw6"), SubResource("RichTextEffect_im0tk"), SubResource("RichTextEffect_377yp"), SubResource("RichTextEffect_dvkiy")]
-threaded = true
-visible_characters_behavior = 1
-
-[node name="Input" type="TextEdit" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = -24.0
-offset_bottom = 59.0
-grow_horizontal = 2
-grow_vertical = 0
-auto_translate = false
-localize_numeral_system = false
-theme_override_colors/background_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 20
-wrap_mode = 1
-caret_blink = true
-
-[node name="CommandHistory" type="Label" parent="."]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 576.0
-offset_right = 704.0
-offset_bottom = 648.0
-theme_override_colors/font_color = Color(1, 1, 1, 0.321569)
-theme_override_font_sizes/font_size = 26
-vertical_alignment = 1
-
 [node name="CommandHandler" parent="." instance=ExtResource("5_1teoh")]
 
 [node name="Music" parent="." instance=ExtResource("11_cry38")]
 
-[node name="FakeInputContainer" type="PanelContainer" parent="."]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_left = 48.0
-offset_top = 576.0
-offset_right = 768.0
-offset_bottom = 648.0
+[node name="World" parent="." instance=ExtResource("15_pngnk")]
 
-[node name="FakeInput" type="RichTextLabel" parent="FakeInputContainer"]
+[node name="UI" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 761.0
+offset_bottom = 576.0
+
+[node name="GreaterThan" type="Label" parent="UI"]
 layout_mode = 2
-size_flags_vertical = 4
-theme_override_font_sizes/normal_font_size = 26
-bbcode_enabled = true
-text = "[cmd]ตัวอย่างจ้าอู่ญู้ป่นปี้สระอี๊ฤู"
-fit_content = true
-scroll_active = false
-custom_effects = [SubResource("RichTextEffect_rjs01"), SubResource("RichTextEffect_57pxg"), SubResource("RichTextEffect_mrx6c"), SubResource("RichTextEffect_uq07h")]
-threaded = true
-
-[node name="GreaterThan" type="Label" parent="."]
-layout_mode = 0
-offset_top = 576.0
-offset_right = 40.0
-offset_bottom = 648.0
+offset_left = 8.0
+offset_top = 581.0
+offset_right = 728.0
+offset_bottom = 645.0
 theme_override_font_sizes/font_size = 40
 text = " >"
 vertical_alignment = 1
 
-[node name="Layout" type="Control" parent="."]
+[node name="Layout" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 768.0
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Layout"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UI/Layout"]
 layout_mode = 0
 offset_right = 384.0
 offset_bottom = 256.0
 size_flags_horizontal = 3
 
-[node name="Map" type="SubViewport" parent="Layout/SubViewportContainer"]
+[node name="Map" type="SubViewport" parent="UI/Layout/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(384, 256)
 render_target_update_mode = 4
 script = ExtResource("14_46rgl")
 
-[node name="Camera2D" type="Camera2D" parent="Layout/SubViewportContainer/Map"]
+[node name="Camera2D" type="Camera2D" parent="UI/Layout/SubViewportContainer/Map"]
 zoom = Vector2(1.8, 1.8)
 
-[node name="MapTile" parent="Layout/SubViewportContainer/Map" instance=ExtResource("15_iqf6m")]
+[node name="MapTile" parent="UI/Layout/SubViewportContainer/Map" instance=ExtResource("15_iqf6m")]
 offset_left = -208.0
 offset_top = -144.0
 offset_right = -176.0
 offset_bottom = -112.0
 
-[node name="Label" type="Label" parent="Layout/SubViewportContainer/Map"]
+[node name="Label" type="Label" parent="UI/Layout/SubViewportContainer/Map"]
 offset_left = -19.0
 offset_top = -11.0
 offset_right = 21.0
@@ -187,7 +118,7 @@ text = "@"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PlayerContainer" type="Panel" parent="Layout"]
+[node name="PlayerContainer" type="Panel" parent="UI/Layout"]
 layout_mode = 2
 offset_left = 16.0
 offset_top = 272.0
@@ -195,16 +126,16 @@ offset_right = 368.0
 offset_bottom = 448.0
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Layout/PlayerContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Layout/PlayerContainer"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="Layout/PlayerContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="UI/Layout/PlayerContainer/VBoxContainer"]
 layout_mode = 2
 text = "<placeholder (Player Stats)>"
 
-[node name="InventoryContainer" type="Panel" parent="Layout"]
+[node name="InventoryContainer" type="Panel" parent="UI/Layout"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -218,10 +149,87 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Layout/InventoryContainer"]
+[node name="Label" type="Label" parent="UI/Layout/InventoryContainer"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 26.0
 text = "<placeholder (Inventory)>"
 
-[connection signal="text_changed" from="Input" to="." method="_on_input_text_changed"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -24.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Logs" type="RichTextLabel" parent="UI/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+auto_translate = false
+localize_numeral_system = false
+bbcode_enabled = true
+fit_content = true
+scroll_following = true
+custom_effects = [SubResource("RichTextEffect_q0mw6"), SubResource("RichTextEffect_im0tk"), SubResource("RichTextEffect_377yp"), SubResource("RichTextEffect_dvkiy")]
+threaded = true
+visible_characters_behavior = 1
+
+[node name="Input" type="TextEdit" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 791.0
+offset_top = 5.0
+offset_right = 759.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 0
+auto_translate = false
+localize_numeral_system = false
+theme_override_colors/background_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+wrap_mode = 1
+caret_blink = true
+
+[node name="CommandHistory" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 576.0
+offset_right = 704.0
+offset_bottom = 648.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.321569)
+theme_override_font_sizes/font_size = 26
+vertical_alignment = 1
+
+[node name="FakeInputContainer" type="PanelContainer" parent="UI"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 48.0
+offset_top = 576.0
+offset_right = 768.0
+offset_bottom = 648.0
+
+[node name="FakeInput" type="RichTextLabel" parent="UI/FakeInputContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 26
+bbcode_enabled = true
+text = "[cmd]ตัวอย่างจ้าอู่ญู้ป่นปี้สระอี๊ฤู"
+fit_content = true
+scroll_active = false
+custom_effects = [SubResource("RichTextEffect_rjs01"), SubResource("RichTextEffect_57pxg"), SubResource("RichTextEffect_mrx6c"), SubResource("RichTextEffect_uq07h")]
+threaded = true
+
+[connection signal="text_changed" from="UI/Input" to="." method="_on_input_text_changed"]

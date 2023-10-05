@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Room" load_steps=4 format=3 uid="uid://biey88r7gg4yc"]
 
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Room.gd" id="1_4ntec"]
-[ext_resource type="Resource" uid="uid://brwxdugqw30yr" path="res://database/items/Book.tres" id="1_upv18"]
+[ext_resource type="Resource" uid="uid://brwxdugqw30yr" path="res://database/stories/MysteryHouse/Room0-ห้องปริศนา/ii_หนังสือสีดำ.tres" id="1_7eb4h"]
 [ext_resource type="Script" path="res://database/rooms/Room001.gd" id="2_nbme5"]
 
 [resource]
@@ -13,13 +13,15 @@ north_east = ""
 west = ""
 east = ""
 south_west = ""
-south = ""
+south = "res://database/rooms/TheVoid.tres"
 south_east = ""
 up = "res://database/rooms/Room004.tres"
 down = ""
 name = "ห้องสมุด"
 description = "ห้องสมุดที่มีแต่หนังสือ ไม่มีสมุด"
-aliases = ["ห้องอ่านหนังสือ"]
-adjective = []
-contents = [ExtResource("1_upv18")]
+keys = Array[String]([])
+adjective = Array[String]([])
+contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([ExtResource("1_7eb4h")])
 source = ExtResource("2_nbme5")
+is_reveal = true
+is_saw = false

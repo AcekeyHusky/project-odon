@@ -7,7 +7,7 @@ class_name Command
 ## Keyword ของคำสั่ง
 @export var key: String = "Key"
 ## Keyword ทางเลือก
-@export var aliases: Array
+@export var aliases: Array[String]
 ## คำอธิบาย ()
 @export_multiline var description: String
 ## แสดงใน Help หรือไม่
@@ -16,11 +16,11 @@ class_name Command
 @export var can_use: bool = true
 
 @onready var game = $"../.."
-@onready var player = get_node("../../Player")
-@onready var logs = get_node("../../ScrollContainer/VBoxContainer/Logs")
-@onready var settings = get_node("../../Settings")
-@onready var history = get_node("../../CommandHistory")
-@onready var commands = ".."
+@onready var world = game.get_node("World")
+@onready var logs = game.get_node("UI/ScrollContainer/VBoxContainer/Logs")
+@onready var history = game.get_node("UI/CommandHistory")
+@onready var finput = game.get_node("UI/FakeInputContainer/FakeInput")
+@onready var settings = game.get_node("Settings")
 
 var words: Array
 

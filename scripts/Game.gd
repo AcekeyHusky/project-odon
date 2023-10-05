@@ -1,22 +1,23 @@
-extends Control
-class_name GameController
+extends Node
+class_name GameManager
 
 @onready var game = self
-@onready var logs = $ScrollContainer/VBoxContainer/Logs
-@onready var input = $Input
-@onready var settings = $Settings
+@onready var world = $World
 @onready var commands = $CommandHandler
-@onready var commandHistory = $CommandHistory
+@onready var logs = $UI/ScrollContainer/VBoxContainer/Logs
+@onready var input = $UI/Input
+@onready var settings = $UI/Settings
+@onready var commandHistory = $UI/CommandHistory
 @onready var music = $Music
-@onready var finput = $FakeInputContainer/FakeInput
-@onready var map = $Layout/SubViewportContainer/Map
+@onready var finput = $UI/FakeInputContainer/FakeInput
+@onready var map = $UI/Layout/SubViewportContainer/Map
 
 @export var here: Room
 
-func tell(text):
+func tell(text: String):
 	# ใช้ append_text แทน add_text เพื่อให้สามารถใช้ bbcode ได้
 	if logs.get_parsed_text() != "":
-		logs.append_text("\n"+text)
+		logs.append_text("\n"+text.format(world.text_format))
 	else:
 		logs.append_text(text)
 	await get_tree().create_timer(0.1).timeout
@@ -26,20 +27,6 @@ func _ready() -> void:
 	finput.text = ""
 	music.play_bgm()
 	input.grab_focus()
-	if here:
-		debug_room()
-		here.connect("tell",tell)
-		here.exec("start")
-		print(search_thing("ห้องสมุด"))
-		print(search_thing("หนังสือ"))
-		
-func debug_room() -> void: 
-	print("สถานที่: " +here.name)
-	if here.contents != []:
-		print("ไอเทมในห้อง")
-		for i in here.contents:
-			print("- " + i.name)
-	print("")
 
 func _process(_delta) -> void:
 	logs.modulate = $Settings.textColor
@@ -65,7 +52,7 @@ func can_pass() -> bool:
 		return true
 		
 func _scroll_bottom():
-	$ScrollContainer.scroll_vertical = $ScrollContainer.get_v_scroll_bar().max_value
+	$UI/ScrollContainer.scroll_vertical = $UI/ScrollContainer.get_v_scroll_bar().max_value
 	pass
 
 func _on_input_entered() -> void:
@@ -73,18 +60,6 @@ func _on_input_entered() -> void:
 		input.clear()
 		finput.clear()
 		commandHistory.text = ""	
-
-func go_to_room(dir: String) -> void:
-	var target = game.here.go_to_dir(dir)
-	if target:
-		here = load(target)
-		here.connect("tell",tell)
-		here.enter_room()
-		map.on_room_change(dir)
-		debug_room()
-	else:
-		print("cannot go ",dir)
-	pass
 
 func _on_input_text_changed() -> void:
 	var merge_command = here.command_keywords
@@ -95,14 +70,5 @@ func _on_input_text_changed() -> void:
 	if match_command.size() > 0 :
 		var command_text = match_command[0]
 		commandHistory.text = command_text
-	commands.fake_input()
-
-func search_thing(_thing):
-	if _thing == here.name:
-		print(here.name)
-		return here
-	else:
-		for i in here.contents:
-			if i.name == _thing:
-				print(i.name)
-				return i
+	commands.faking_input()
+	

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Living" load_steps=2 format=3 uid="uid://ew2bs4nyji8p"]
+
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Living.gd" id="1_vjj2e"]
+
+[resource]
+script = ExtResource("1_vjj2e")
+name = "ผู้เล่น"
+description = "ช่างดูดีอะไรเยี่ยงนี้"
+keys = Array[String](["ฉัน", "ตัวเอง", "เรา", "อั๊ว", "ข้า", "กู", "me"])
+adjective = Array[String]([])
+contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([])
+is_saw = true

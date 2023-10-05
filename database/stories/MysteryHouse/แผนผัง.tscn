@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://0fpxuh5ogw4d"]
+
+[node name="แผนผัง" type="Node2D"]
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+offset_left = 682.0
+offset_top = 422.0
+offset_right = 914.0
+offset_bottom = 517.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="ColorRect3"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "ห้องนั่งเล่น"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 387.0
+offset_top = 422.0
+offset_right = 619.0
+offset_bottom = 517.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "ห้องสมุด"
+horizontal_alignment = 1
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 556.0
+offset_top = 469.0
+offset_right = 744.0
+offset_bottom = 484.0

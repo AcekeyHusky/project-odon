@@ -7,8 +7,8 @@
 [ext_resource type="Script" path="res://scripts/commands/CmdGo.gd" id="4_tue4j"]
 [ext_resource type="Script" path="res://scripts/commands/CmdSettings.gd" id="6_446ub"]
 [ext_resource type="Script" path="res://scripts/commands/CmdLook.gd" id="7_66ayg"]
-[ext_resource type="Script" path="res://scripts/CmdGoShort.gd" id="9_6u7g4"]
 [ext_resource type="Script" path="res://scripts/commands/CmdGeneral.gd" id="9_58p8r"]
+[ext_resource type="Script" path="res://scripts/commands/CmdTake.gd" id="9_mlvog"]
 
 [node name="CommandHandler" type="Node"]
 script = ExtResource("1_df8t5")
@@ -16,7 +16,7 @@ script = ExtResource("1_df8t5")
 [node name="CmdExample" type="Node" parent="."]
 script = ExtResource("2_6tfxg")
 key = "ตัวอย่าง"
-aliases = ["ตย"]
+aliases = Array[String](["ตย"])
 description = "ตัวอย่างการเพิ่ม Command node"
 
 [node name="CmdGeneral" type="Node" parent="."]
@@ -24,9 +24,10 @@ script = ExtResource("9_58p8r")
 
 [node name="CmdHelp" type="Node" parent="."]
 script = ExtResource("3_4dikt")
-text_help_init = "[color=LIGHT_SKY_BLUE]ดูเหมือนว่าคุณจะสามารถทำสิ่งต่อไปนี้ได้.....[/color]"
+text_help_init = "ดูเหมือนว่าคุณจะสามารถทำสิ่งต่อไปนี้ได้..."
 text_help_no_desc = "[color=GRAY][i]ไม่มีคำอธิบายสำหรับคำสั่งนี้ :'([/i][/color]"
 key = "ช่วย"
+is_in_help = false
 
 [node name="CmdSettings" type="Node" parent="."]
 script = ExtResource("6_446ub")
@@ -34,20 +35,22 @@ script = ExtResource("6_446ub")
 [node name="CmdRude" type="Node" parent="."]
 script = ExtResource("4_m5714")
 key = "เหี้ย"
-aliases = ["พ่อง", "สัส"]
+aliases = Array[String](["พ่อง", "สัส"])
 is_in_help = false
 
 [node name="CmdGo" type="Node" parent="."]
 script = ExtResource("4_tue4j")
 key = "ไป"
-aliases = ["ป"]
+aliases = Array[String](["ป"])
 description = "เคลื่อนย้ายตัวเองไปยังทิศทางที่กำหนด"
 
 [node name="CmdLook" type="Node" parent="."]
 script = ExtResource("7_66ayg")
 key = "ดู"
-aliases = ["เบิ่ง"]
+aliases = Array[String](["เบิ่ง"])
 description = "มองดูสิ่งที่อยู่รอบ ๆ ตัวเอง ใช้เพื่อสำรวจสถานที่นั้นว่าคืออะไร และสามารถกำหนดเฉพาะเจาะจงไปยังสิ่งที่ต้องการดูในสถานที่นั้นได้อีกด้วย"
 
-[node name="CmdGoShort" type="Node" parent="."]
-script = ExtResource("9_6u7g4")
+[node name="CmdTake" type="Node" parent="."]
+script = ExtResource("9_mlvog")
+key = "หยิบ"
+aliases = Array[String](["เอา", "โด้"])

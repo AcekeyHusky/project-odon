@@ -16,13 +16,17 @@ config/features=PackedStringArray("4.1", "Mobile")
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://scripts/Global.gd"
+
 [display]
 
 window/size/resizable=false
 
 [dotnet]
 
-project/assembly_name="Rl"
+project/assembly_name="ProjectOdon"
 
 [editor_plugins]
 

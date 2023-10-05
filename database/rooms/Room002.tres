@@ -4,9 +4,6 @@
 
 [resource]
 script = ExtResource("1_g23nj")
-name = "โถงทางเดิน 1"
-description = "โถงทางเดินที่ยาวไปสุดลูกหูลูกตา เหมือนว่ายังสามารถไปต่อทาง  \"เหนือ\" ได้นะ"
-things = {}
 command_keywords = ["ไปเหนือ", "ไปใต้", "ดู"]
 north_west = ""
 north = "res://database/rooms/Room003.tres"
@@ -18,3 +15,10 @@ south = "res://database/rooms/Room001.tres"
 south_east = ""
 up = ""
 down = ""
+name = "ห้องโถง 1"
+description = "โถงทางเดินที่ยาวไปสุดลูกหูลูกตา เหมือนว่ายังสามารถไปต่อทาง  \"เหนือ\" ได้นะ"
+key = ""
+aliases = []
+adjective = []
+contents = []
+is_saw = false
