@@ -9,7 +9,7 @@
 """
 extends Command
 
-func _ready():
+func _ready(): # จะใส่ไม่ใส่ก็ได้แล้วแต่
 	key = "สวัสดี" # สามารถเปลี่ยน key ในสคริปต์ได้ในฟังชันก์นี้
 	is_in_help = false # ตั้งให้ไม่ปรากฏใน help
 	

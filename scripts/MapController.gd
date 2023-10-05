@@ -25,9 +25,9 @@ func on_room_change(dir:String):
 		"south":
 			map_loc.y = map_loc.y + 1
 		"east":
-			map_loc.y = map_loc.x + 1
+			map_loc.x = map_loc.x + 1
 		"west":
-			map_loc.y = map_loc.x - 1
+			map_loc.x = map_loc.x - 1
 		"up":
 			map_loc.z = map_loc.z + 1
 			is_level_change = true

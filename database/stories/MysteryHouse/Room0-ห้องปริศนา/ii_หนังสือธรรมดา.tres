@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://ccuplmsm6hngw"]
+
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Item.gd" id="1_6vxva"]
+
+[resource]
+script = ExtResource("1_6vxva")
+weight = 0.0
+can_take = false
+can_move = false
+can_eat = false
+name = "หนังสือธรรมดา"
+description = "หนังสือธรรมดา ไม่มีอะไรน่าสนใจ"
+keys = Array[String](["หนังสือ"])
+adjective = Array[String]([])
+contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([])
+is_saw = true

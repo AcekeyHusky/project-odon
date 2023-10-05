@@ -5,8 +5,8 @@ class_name Item # อยากตั้งว่า object ง่ะ แต่�
 @export var weight: float
 
 ## เก็บได้อ๊ะเปล่า
-@export var is_can_pick: bool
+@export var can_take: bool
 ## ย้ายได้อ๊ะเปล่า
-@export var is_can_move: bool
+@export var can_move: bool
 ## กินได้อ๊ะเปล่า
-@export var is_can_eat: bool
+@export var can_eat: bool

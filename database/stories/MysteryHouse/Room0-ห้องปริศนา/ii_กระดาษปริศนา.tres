@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://dlav81lh5sswk"]
+
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Item.gd" id="1_wpt7d"]
+
+[resource]
+script = ExtResource("1_wpt7d")
+weight = 0.0
+can_take = true
+can_move = false
+can_eat = false
+name = "กระดาษปริศนา"
+description = "กระดาษโน๊ตสีขาว มีข้อความเขียนไว้ว่า \"5079\""
+keys = Array[String](["กระดาษ", "โน๊ต"])
+adjective = Array[String](["ปริศนา"])
+contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([])
+is_saw = true

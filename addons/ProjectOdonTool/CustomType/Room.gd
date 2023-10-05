@@ -38,15 +38,6 @@ func exec(method:String,arg=[]):
 	else:
 		print("Command : ", method, " does not existed")
 		return null
-
-# handle คำสั่ง "ดู"
-func look():
-	init_script()
-	# เช็คว่า script มี custom event สำหรับ cmd_look หรือไม่
-	if RoomScript && RoomScript.has_method("look"):
-		RoomScript.call("look")
-	else:
-		Tell(description)
 		
 func go_to_dir(dir:String):
 	if self[dir] :
@@ -63,27 +54,16 @@ func go_to_dir(dir:String):
 func get_data(target: String):
 	return self[target]
 	
+
 func enter_room():
 	init_script()
-	# เช็คว่า script มี custom event สำหรับ cmd_look หรือไม่
 	if RoomScript && RoomScript.has_method("enter_room"):
 		RoomScript.call("enter_room")
 	else:
 		Tell("[room]%s[/room]" % name)
-
-
-func look_something(thing:String):
-	init_script()
-	# เช็คว่า script มี custom event สำหรับ cmd_look หรือไม่
-	if RoomScript && RoomScript.has_method("look_something"):
-		RoomScript.call("look_something",thing)
-	else:
-		if contents.has(thing) :
-			print(thing)
-			# Tell(contents.get(thing))
-		else:
-			print(contents.has(thing))
-			Tell("ดูเหมือนว่าจะไม่มี \""+thing+"\" อยู่ที่นี่")
+		if not is_saw:
+			Tell(description)
+			is_saw = true
 
 			
 func Tell(msg : String):

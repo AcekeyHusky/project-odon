@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://brwxdugqw30yr"]
+
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Item.gd" id="1_a0u4l"]
+
+[resource]
+script = ExtResource("1_a0u4l")
+weight = 1.0
+can_pick = false
+can_move = false
+can_eat = false
+name = "หนังสือสีดำ"
+description = "หนังสือเก่า ๆ ที่มีรอยฝุ่นเปื้อนจับ ปกหนังสือทำจากหนังสีดำกลับ คุณพลิกทั้งด้านหน้าและด้านหลังแต่กลับไม่พบรูปภาพหรือข้อความใดปรากฏให้เห็น คุณรู้สึกสงสัยเล็กน้อยว่าข้างในนั้นมีอะไรให้[cmd]อ่าน[/cmd]"
+keys = Array[String]([])
+adjective = Array[String](["ปริศนา"])
+contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([])
+is_saw = false

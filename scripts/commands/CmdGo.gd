@@ -15,21 +15,12 @@ var msg_failed = "ไปไหนดีน้าาาา คุณคิดก�
 
 func fun():
 	if words.size() > 1:
-		var dir = words[1]
-		match dir:
-			"เหนือ","น":
-				game.go_to_room("north")
-			"ใต้", "ต":
-				game.go_to_room("south")
-			"ตะวันออก", "ออก", "อ", "ตะวันอออก":
-				game.go_to_room("east")
-			"ตะวันตก", "ตก", "ตต","ตะวันตก":
-				game.go_to_room("west")
-			"ขึ้น", "ข","บน":
-				game.go_to_room("up")
-			"ลง", "ล","ล่าง":
-				game.go_to_room("down")
-			_:
-				game.tell(msg_failed)
+		var _dir: String = words[1]
+		var _target = Global.get_direction(_dir)
+		print(_target)
+		if _target:
+			world.go_to_room(_target)
 	else:
 		game.tell(msg_failed)
+		
+

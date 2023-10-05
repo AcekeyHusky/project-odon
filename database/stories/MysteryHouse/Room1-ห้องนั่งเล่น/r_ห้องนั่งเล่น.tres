@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Room" load_steps=2 format=3 uid="uid://tbxdrwamf57n"]
+
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Room.gd" id="1_2ocxc"]
+
+[resource]
+script = ExtResource("1_2ocxc")
+command_keywords = []
+north_west = ""
+north = ""
+north_east = ""
+west = "res://database/stories/MysteryHouse/Room0-ห้องปริศนา/ห้องปริศนา.tres"
+east = ""
+south_west = ""
+south = ""
+south_east = ""
+up = ""
+down = ""
+name = "ห้องนั่งเล่น"
+description = "ห้องนั่งเล่นไง"
+keys = Array[String]([])
+adjective = Array[String]([])
+contents = Array[Resource("res://addons/ProjectOdonTool/CustomType/Thing.gd")]([])
+is_saw = false

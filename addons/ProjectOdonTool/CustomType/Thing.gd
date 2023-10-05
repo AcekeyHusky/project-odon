@@ -5,18 +5,27 @@ class_name Thing
 @export var name: String
 ## คำฮธิบายน่ะสิ
 @export_multiline var description: String
-## ชื่ออื่น
-@export var aliases: Array
+## คีย์น่ะสิ
+@export var keys: Array[String]
 # คำคุณศัพท์หรือว่าคำวิเศษณ์ในภาษาไทยไงล่ะ
-@export var adjective: Array
+@export var adjective: Array[String]
 ## สิ่งที่บรรจุอยู่ข้างใน
-@export var contents: Array
+@export var contents: Array[Thing]
 ## สคริปต์
 @export var source: Script
+
+@export_group("States")
+@export var is_saw: bool
 
 var _script: Node
 
 signal tell
+
+func add_contents(_thing: Thing) -> void:
+	contents.append(_thing)
+	
+func remove_contents(_thing: Thing) -> void:
+	contents.erase(_thing)
 
 func init_script():
 	# ข้ามการ call หากไม่ได้ใส่ source

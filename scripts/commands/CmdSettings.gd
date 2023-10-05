@@ -3,6 +3,8 @@ extends Node
 
 var key = "ตั้งค่า"
 
+var description = "ปรับแต่งรูปแบบจอแสดงผล (สีข้อความ)"
+
 func fun(_args):
 	game.cur_stage = 1
 	game.tell("คุณเข้าสู่หน้าตั้งค่า/ปรับแต่งจอแสดงผล")
