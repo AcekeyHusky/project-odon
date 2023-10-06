@@ -1,5 +1,11 @@
 # Changelog
 
+## 06/10/2023
+fransbell:
+- แก้ world.update_thing_list ไป append แบบ recursive ให้รองรับ contents ใน contents ใน contents ... indefinitely
+- แก้ auto complete ให้รองรับ commmand จาก world.update_thing_list ด้วย
+- งมโค้ด room ที่แก้ใหม่งงแตก XD เลยอู้ต่อซะเลย อิอิ
+
 ## 05/10/2023
 slost:
 - เปลี่ยนฟอนต์เป็น NotoSans (ฟอนต์พิกเซลมันอ่านยาก)

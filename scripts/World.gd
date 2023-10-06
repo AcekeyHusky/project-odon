@@ -108,16 +108,13 @@ func search_thing_from(_search: String, _from: Thing):
 
 func update_thing_list() -> void:
 	commands.thing_list = []
-	var thing_list: Array = []
-	for i in here.contents:
-		commands.thing_list.append(i.name)
-		if i.keys.size() > 0:
-			for id in i.keys:
+	append_things(here.contents)
+	
+func append_things(contents:Array[Thing]):
+	for content in contents:
+		commands.thing_list.append(content.name)
+		for id in content.keys:
 				commands.thing_list.append(id)
-		if i.contents.size() > 0:
-			for ii in i.contents:
-				commands.thing_list.append(ii.name)
-				if ii.keys.size() > 0:
-					for id in ii.keys:
-						commands.thing_list.append(id)
-	# แก้ให้มันไม่ซ้อนกันเยอะๆที
+		if content.contents.size() > 0:
+			append_things(content.contents)
+	

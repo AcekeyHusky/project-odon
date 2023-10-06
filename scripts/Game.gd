@@ -63,7 +63,13 @@ func _on_input_entered() -> void:
 
 func _on_input_text_changed() -> void:
 	var merge_command = here.command_keywords
+	var thing_command = []
+	
+	for i in commands.thing_list:
+		thing_command.append("{key}{keyword}".format({"key":"ดู","keyword":i}))
+		
 	merge_command.append_array(commands.command_history)
+	merge_command.append_array(thing_command)
 	
 	var match_command = merge_command.filter(func(text): return text.begins_with(input.text))
 	commandHistory.text = ""
