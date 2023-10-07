@@ -11,16 +11,15 @@ func fun():
 	for child in get_parent().get_children():
 		if child is Command:
 			# สร้าง key และ aliases
-			var _key = child.get("key")
-			if ("aliases" in child && child.get("aliases").size() > 0 ):
+			var _key = child.key
+			if child.aliases.size() > 0:
 				_key = [ _key ] + child.get("aliases")
 			# สร้างคำอธิบาย
 			var _desc = text_help_no_desc
-			if ("description" in child):
-				if (child.get("description") != ''):
-					_desc = child.get("description")
+			if child.description != '':
+				_desc = child.get("description")
 			# เช็คว่าแสดงใน help ได้หรือไม่
-			if ("is_in_help" in child && child.get("is_in_help") == true):
+			if child.is_in_help == Global.TYPE_IS_IN_HELP.SHOW || ( child.is_in_help == Global.TYPE_IS_IN_HELP.LEARN && get_parent().command_learned.has(child.key) ):
 				display_help_cmd(_key, _desc)
 
 
