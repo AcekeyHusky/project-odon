@@ -1,5 +1,9 @@
 # Changelog
 
+## 08/10/2023
+jelato:
+- เปลี่ยน is_in_help เป็น enum, เพิ่มคำสั่งที่ต้องใช้ก่อนถึงจะแสดงใน Help ได้
+
 ## 06/10/2023
 fransbell:
 - แก้ world.update_thing_list ไป append แบบ recursive ให้รองรับ contents ใน contents ใน contents ... indefinitely

@@ -11,7 +11,7 @@ class_name Command
 ## คำอธิบาย ()
 @export_multiline var description: String
 ## แสดงใน Help หรือไม่
-@export var is_in_help: bool = true
+@export var is_in_help:Global.TYPE_IS_IN_HELP = Global.TYPE_IS_IN_HELP.SHOW
 ## ตอนนี้ใช้งานได้หรือไม่
 @export var can_use: bool = true
 

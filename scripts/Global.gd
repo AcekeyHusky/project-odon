@@ -27,3 +27,13 @@ func is_in_dictionary(_value: int, _dict: Dictionary) -> bool:
 		if _value in array:
 			return true
 	return false
+
+#-------------------------------------------------------
+
+enum TYPE_IS_IN_HELP {
+	SHOW, # แสดง
+	HIDE, # ไม่แสดง
+	LEARN # แสดงหลังจากลองใช้คำสั่งนั้นแล้ว
+}
+
+

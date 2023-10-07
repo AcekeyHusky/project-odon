@@ -13,6 +13,8 @@ class_name CommandHandler
 
 var command_hash: Dictionary = {}
 var command_history: Array[String] = []
+var command_learned: Array[String] = []
+
 var cmd: Command
 var words: Array
 var cmd_list: Array = []
@@ -49,10 +51,11 @@ func process_input(_input) -> void:
 		print(words)
 		cmd.exec(words)
 		world.update_thing_list()
+		check_learned_cmd(cmd)
 	elif _target:
 		world.go_to_room(_target)
 	else:
-		game.tell("ไม่พบคำสั่งที่คุณใช้ ลองพิมพ์ [cmd]ช่วย[/cmd] สิ!")	
+		game.tell("ไม่พบคำสั่งที่คุณใช้ ลองพิมพ์ [cmd]ช่วย[/cmd] สิ!")
 	
 	command_hash[_input] = true
 	for key in command_hash:
@@ -68,7 +71,11 @@ func is_command(_key: String) -> bool:
 				cmd = child
 				return true
 	return false
-	
+
+func check_learned_cmd(_cmd: Command) -> void:
+	if _cmd.is_in_help == Global.TYPE_IS_IN_HELP.LEARN && !command_learned.has(_cmd.key):
+		command_learned.append(_cmd.key)
+		game.tell("...\n[color=LIGHT_SALMON]คุณได้เรียนรู้คำสั่ง [cmd]%s[/cmd] แล้ว![/color]" % _cmd.key)
 
 func create_cmd_list() -> void:
 	for child in get_children():
