@@ -8,6 +8,8 @@
 """
 extends Command
 
+var easter = 0
+
 func fun():
 	if words.size() > 1:
 		var thing = words[1]
@@ -23,8 +25,15 @@ func fun():
 		else:
 			game.tell(Global.text_no_thing % thing)
 	else:
+		
 		here()
 
 func here():
-	game.tell(world.here.description)
+	if (easter < 9):
+		easter += 1
+		game.tell("(คุณดูห้องนี้ไปแล้ว " + str(easter) + " /10 รอบ)")
+		game.tell(world.here.description)
+	else:
+		game.tell("ยินดีด้วย คุณได้ดูมากเกินไปจนไม่สามารถออกไปจากห้องนี้ได้")
+		get_tree().quit()
 	
