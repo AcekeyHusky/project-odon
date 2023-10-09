@@ -11,17 +11,17 @@ class_name Command
 ## คำอธิบาย ()
 @export_multiline var description: String
 ## แสดงใน Help หรือไม่
-@export var is_in_help:Global.TYPE_IS_IN_HELP = Global.TYPE_IS_IN_HELP.SHOW
+@export var help_option:Global.CMD_HELP_OPTION = Global.CMD_HELP_OPTION.SHOW
 ## ตอนนี้ใช้งานได้หรือไม่
 @export var can_use: bool = true
 
 @onready var game = $"../.."
-@onready var world = game.get_node("World")
 @onready var logs = game.get_node("UI/ScrollContainer/VBoxContainer/Logs")
 @onready var history = game.get_node("UI/CommandHistory")
 @onready var finput = game.get_node("UI/FakeInputContainer/FakeInput")
 @onready var settings = game.get_node("Settings")
 
+var world: Node
 var words: Array
 
 func _int():
@@ -33,6 +33,7 @@ func fun():
 	game.tell("โหล")
 	
 func exec(input: Array):
+	world = game.get_node("World")
 	words = input
 	fun()
 	

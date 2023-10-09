@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Tale" load_steps=2 format=3 uid="uid://dkpmlurv11i1e"]
+
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Tale.gd" id="1_t1byu"]
+
+[resource]
+script = ExtResource("1_t1byu")
+name = "การผจญภัยสุดลูกหูลูกตา"
+description = "ตัวอย่างการผจญภัยแบบ Interactive Fiction"
+id = "odon.example"
+author = "Project Odon Team"
+world = "res://tales/Example/world.tscn"

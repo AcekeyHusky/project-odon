@@ -7,7 +7,7 @@ class_name CommandHandler
 @onready var logs = game.get_node("UI/ScrollContainer/VBoxContainer/Logs")
 @onready var history = game.get_node("UI/CommandHistory")
 @onready var finput = game.get_node("UI/FakeInputContainer/FakeInput")
-@onready var world = game.get_node("World")
+@onready var world: Node
 @onready var input = game.get_node("UI/Input")
 @onready var commands = self
 
@@ -22,14 +22,15 @@ var dir_list: Array = []
 var thing_list: Array = []
 var key_lists: Array = [cmd_list, dir_list, thing_list]
 
+
 func update_key_lists():
 	key_lists = [cmd_list, dir_list, thing_list]
+
 
 ## ระบบใส่ bbcode ให้ FakeInput ## TODO
 func faking_input() -> void:
 	update_key_lists()
 	var _input_words: Array = parse(input.text, key_lists)
-	var _fake_words: Array = ["", "", ""]
 	finput.clear()
 	for i in _input_words:
 		if is_command(i) and _input_words.find(i) == 0:
@@ -42,10 +43,14 @@ func faking_input() -> void:
 			finput.append_text("%s" % i)
 	print(_input_words)
 
+
 func process_input(_input) -> void:
 	game.tell("\n> %s" % input.text)
 	words = parse(_input, key_lists)
 	var _target = Global.get_direction(_input)
+	if not game.can_use_cmd:
+		game.tell("คำสั่งไม่ถูกต้อง")
+		return
 	if is_command(words[0]):
 		print(cmd)
 		print(words)
@@ -62,6 +67,7 @@ func process_input(_input) -> void:
 		if !command_history.has(key):
 			command_history.append(key)
 
+
 func is_command(_key: String) -> bool:
 	for child in get_children():
 		if child is Command:
@@ -73,7 +79,7 @@ func is_command(_key: String) -> bool:
 	return false
 
 func check_learned_cmd(_cmd: Command) -> void:
-	if _cmd.is_in_help == Global.TYPE_IS_IN_HELP.LEARN && !command_learned.has(_cmd.key):
+	if _cmd.help_option == Global.CMD_HELP_OPTION.LEARN && !command_learned.has(_cmd.key):
 		command_learned.append(_cmd.key)
 		game.tell("...\n[color=LIGHT_SALMON]คุณได้เรียนรู้คำสั่ง [cmd]%s[/cmd] แล้ว![/color]" % _cmd.key)
 
@@ -90,12 +96,12 @@ func create_cmd_list() -> void:
 	print(cmd_list)
 	print("")
 	
+	
 func create_dir_list() -> void:
 	for i in Global.directions.keys():
 		for _dir in Global.directions[i]:
 			dir_list.append(_dir)
 			
-
 	
 func add_CmdGeneral() -> void:
 	var cmdg = $CmdGeneral
@@ -112,6 +118,7 @@ func parse(raw_string: String, key_lists: Array) -> Array:
 		slices += word_slices
 	return slices
 
+
 func slice_word(word: String, key_lists: Array) -> Array:
 	var slices = []
 	var i = 0
@@ -119,7 +126,8 @@ func slice_word(word: String, key_lists: Array) -> Array:
 	# Combine and sort all key lists by length in descending order
 	var combined_key_list = []
 	for key_list in key_lists:
-		combined_key_list += key_list
+		if key_list.size() > 0:
+			combined_key_list += key_list
 	combined_key_list.sort_custom(sort_string_lengths)
 
 	while i < len(word) and combined_key_list.size() > 0:
@@ -139,12 +147,19 @@ func slice_word(word: String, key_lists: Array) -> Array:
 
 	return slices
 	
+	
 func sort_string_lengths(a: String, b: String) -> bool:
 	if len(a) > len(b):
 		return true
 	return false
 
+
 func _ready() -> void:
 	add_CmdGeneral()
 	create_cmd_list()
 	create_dir_list()
+
+
+func _on_game_world_loaded():
+	world = game.get_node("World")
+	print(world)

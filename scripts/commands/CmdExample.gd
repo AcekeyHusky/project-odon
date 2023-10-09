@@ -11,7 +11,7 @@ extends Command
 
 func _ready(): # จะใส่ไม่ใส่ก็ได้แล้วแต่
 	key = "สวัสดี" # สามารถเปลี่ยน key ในสคริปต์ได้ในฟังชันก์นี้
-	is_in_help = Global.TYPE_IS_IN_HELP.HIDE # ตั้งให้ไม่ปรากฏใน help
+	help_option = Global.CMD_HELP_OPTION.HIDE # ตั้งให้ไม่ปรากฏใน help
 	
 func fun(): # ชุดโค้ดที่จะะทำงานเมื่อพิมพ์คำสั่ง
 	game.tell("สวัสดีจ้า") # แสดงผลข้อความนี้ในเกม

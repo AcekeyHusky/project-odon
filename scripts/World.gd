@@ -4,48 +4,42 @@
 
 extends Node
 
+## ห้องเริ่มต้น
 @export var starter_room: Room
-@export var starter_player: Living
+## ตัวละครผู้เล่น
+@export var starter_player: Actor
 
 @onready var game = $".."
 @onready var map = game.get_node("UI/Layout/SubViewportContainer/Map")
 @onready var commands = game.get_node("CommandHandler")
 
-var rooms: Array = []
 var here: Room
-var player: Living
+var player: Actor
 
 var text_format: Dictionary
 var started: bool = false
 
-func on_enter_room(_room_id: int):
-	var _room = rooms[_room_id]
-	game.tell("[room]%s[/room]" % _room.name)
+func on_enter_room(_room: Room):
+	game.tell("[room]%s[/room]" % _room.key)
 	if not _room.is_saw:
 		game.tell(_room.description)
 		_room.is_saw = true
 
 func rooms_init() -> void:
-	if starter_room:
-		rooms.append(starter_room)
-	else:
-		rooms.append(load("res://database/rooms/TheVoid.tres"))
-		
+	here = starter_room
+	
 	if starter_player:
 		player = starter_player
-	else:
-		player = load("res://database/livings/Player.tres")
-	
-	here = rooms[0]
-	here.add_contents(player)
-	print(rooms[0].name)
-	print(rooms[0].contents[0].name)
+
 	text_format = {"player":player.name}
+
 
 func _ready() -> void:
 	rooms_init()
 	debug_room()
 	update_thing_list()
+	game.music.play_bgm()
+
 	
 func _process(_delta):
 	text_format = {"player":player.name}
@@ -54,67 +48,65 @@ func _process(_delta):
 		started = true
 	
 func event_start() -> void:
-	on_enter_room(0)
+	on_enter_room(here)
 	
+# ย้ายห้อง
 func go_to_room(dir: String) -> void:
-	var _target = here.go_to_dir(dir)
-	print(_target)
-	if _target:
-		_target = load(_target)
-		if not rooms.has(_target):
-			rooms.append(_target)
-		var _room_id = rooms.find(_target)
+	var _target_room = here.go_to_dir(dir)
+	if _target_room:
 		player.name = "สุดหล่อ"
-		move_player(_room_id)
-		on_enter_room(_room_id)
+		move_player(_target_room)
+		on_enter_room(_target_room)
 		map.on_room_change(dir)
 	else:
+		game.tell("ไปไม่ล่าย")
 		print("cannot go ", dir)
 	debug_room()
 	pass
 
+# ย้ายผู้เล่น
 func move_player(_room_id) -> void:
-	rooms[_room_id].add_contents(player)
-	here.remove_contents(player)
-	here = rooms[_room_id]
+	player.reparent(_room_id)
+	here = _room_id
 	
 func debug_room() -> void:
 	print("")
-	print("Room %s: %s" % [rooms.find(here), here.name])
-	if here.contents != []:
-		print("ไอเทมในห้อง")
-		for i in here.contents:
-			print("- " + i.name)
-	for i in rooms:
-		print("Rooms %s: %s" % [rooms.find(i), i.name])
+	print("Room %s:" % here)
+	print("ไอเทมในห้อง")
 
 func search_thing(_thing: String):
 	return search_thing_from(_thing, here)
 					
 func search_thing_from(_search: String, _from: Thing):
-	if _from.name == _search:
-		return _from
+	if  _search == _from.key:
+		return _from	
 	
-	if "contents" in _from:
-		var contents = _from.get("contents")
-		
-		for child in contents:
-			if search_thing_from(_search, child) != null:
-				return search_thing_from(_search, child)
-			if ("keys") in child and _search in child.keys:
-				return child
+	for _thing in _from.get_contents():
+		if _search == _thing.key:
+			return _thing
+		if _thing.aliases.has(_search):
+			return _thing
+			
+		for _sub_thing in _thing.get_contents():
+			if search_thing_from(_search, _sub_thing) != null:
+				return search_thing_from(_search, _sub_thing)
 				
 	return null
 
 func update_thing_list() -> void:
 	commands.thing_list = []
-	append_things(here.contents)
+	print(here.get_contents())
+	append_things(here.get_contents())
+	print("...")
+	print("Thing Key")
+	print(commands.thing_list )
 	
-func append_things(contents:Array[Thing]):
+func append_things(contents: Array):
 	for content in contents:
-		commands.thing_list.append(content.name)
-		for id in content.keys:
-				commands.thing_list.append(id)
-		if content.contents.size() > 0:
-			append_things(content.contents)
-	
+		if content.is_reveal:
+			commands.thing_list.append(content.key)
+			if content.aliases.size() > 0:
+				for id in content.aliases:
+					commands.thing_list.append(id)
+			if content.get_contents().size() > 0:
+				append_things(content.get_contents())
