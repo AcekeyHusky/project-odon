@@ -17,9 +17,9 @@ func fun():
 				
 			if thing_search.can_take:
 				game.tell("คุณหยิบ[thing]%s[/thing]" % thing_search.name)
-				if not thing_search.is_saw:
+				if not thing_search.is_looked:
 					game.tell(thing_search.description)
-					thing_search.is_saw = true
+					thing_search.is_looked = true
 				thing_search.reparent(world.player)
 				print(thing_search)
 			else:

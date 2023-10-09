@@ -45,19 +45,13 @@ func event_welcome() -> void:
 func _ready() -> void:
 	finput.text = ""
 	input.grab_focus()
-	
 	event_welcome()
-	
-func wait_input(_text):
-	if text_send and text_send == _text:
-		return true
 		
 var is_loaded_world: bool
 
 func _process(_delta) -> void:
 	if text_send and not is_loaded_world:
 		var find_id = int(text_send)
-		print(find_id)
 		if find_id >= 0 and find_id < tales.size():
 			var selecting_id = tales[find_id]
 			var current_tale = load(selecting_id.world).instantiate()
@@ -74,6 +68,7 @@ func _process(_delta) -> void:
 			#	tell("Ok")
 			# TODO
 	
+	
 func _input(_event):
 	if _event.is_action_pressed("enter") and input.text != "":
 		on_pressed_enter()
@@ -86,7 +81,6 @@ func on_pressed_enter() -> void:
 	if state == STATES.FREE:
 		commands.process_input(input.text)
 	text_send = input.text
-	print(text_send)
 	commandHistory.text = ""
 	input.clear()
 	finput.clear()

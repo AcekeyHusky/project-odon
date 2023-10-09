@@ -12,8 +12,12 @@ class_name Thing
 @export var adjective: Array[String]
 
 @export_group("States")
+## เปิดเผยหรือไม่ หาก false คำสั่งจะไม่ทำงานด้วย
 @export var is_reveal: bool = true
-@export var is_saw: bool
+## ใช้คำสั่ง look กับสิ่งนี้หรือยัง
+@export var is_looked: bool
+## ย้ายอ๊ะยัง
+@export var is_moved: bool
 
 @export_group("Notes")
 ## สำหรับเขียนคำโน๊ตทิ้งไว้เพื่อใช้การพัฒนา
@@ -21,14 +25,7 @@ class_name Thing
 
 var _script: Node
 
-signal tell
 
-func add_contents(_thing: Thing) -> void:
-	pass
-	
-func remove_contents(_thing: Thing) -> void:
-	pass
-	
 # ทำงานคล้าย get_children แต่ return เฉพาะคลาส Thing
 func get_contents() -> Array:
 	var content_list: Array = []

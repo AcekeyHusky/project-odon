@@ -16,8 +16,9 @@ func _process(_delta):
 	
 
 func reset():
+	visible_characters = 0
 	clear()
-	#scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value
+	scroll.scroll_vertical = scroll.get_v_scroll_bar().max_value
 
 # กดปุ่มเพื่อข้ามการอนิเมทตัวอักษร
 func _input(event) -> void:

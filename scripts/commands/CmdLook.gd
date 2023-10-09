@@ -23,9 +23,9 @@ func fun():
 				game.tell(thing_search.description)
 			else:
 				game.tell(words[1] + "ไง")
-			thing_search.is_saw = true	
-			# for i in thing_search.contents:
-			#	i.is_reveal = true
+			thing_search.is_looked = true	
+			for i in thing_search.get_contents():
+				i.is_reveal = true
 		else:
 			game.tell(Global.text_no_thing % thing)
 	else:	

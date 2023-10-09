@@ -36,4 +36,4 @@ enum CMD_HELP_OPTION {
 	LEARN # แสดงหลังจากลองใช้คำสั่งนั้นแล้ว
 }
 
-
+var is_picked_cat = false

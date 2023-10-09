@@ -52,8 +52,8 @@ description = "มองดูสิ่งที่อยู่รอบ ๆ ต
 
 [node name="CmdTake" type="Node" parent="."]
 script = ExtResource("9_mlvog")
-key = "หยิบ"
-aliases = Array[String](["เอา", "โด้"])
+key = "เก็บ"
+aliases = Array[String](["หยิบ", "เอา", "โด้"])
 
 [node name="CmdExampleSecret" type="Node" parent="."]
 script = ExtResource("10_ldg2t")

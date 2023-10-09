@@ -19,11 +19,13 @@ var player: Actor
 var text_format: Dictionary
 var started: bool = false
 
+var test: bool
+
 func on_enter_room(_room: Room):
 	game.tell("[room]%s[/room]" % _room.key)
-	if not _room.is_saw:
+	if not _room.is_looked:
 		game.tell(_room.description)
-		_room.is_saw = true
+		_room.is_looked = true
 
 func rooms_init() -> void:
 	here = starter_room
@@ -39,8 +41,8 @@ func _ready() -> void:
 	debug_room()
 	update_thing_list()
 	game.music.play_bgm()
-
 	
+
 func _process(_delta):
 	text_format = {"player":player.name}
 	if not started:
@@ -73,6 +75,7 @@ func debug_room() -> void:
 	print("")
 	print("Room %s:" % here)
 	print("ไอเทมในห้อง")
+	print(here.get_contents())
 
 func search_thing(_thing: String):
 	return search_thing_from(_thing, here)
@@ -97,9 +100,6 @@ func update_thing_list() -> void:
 	commands.thing_list = []
 	print(here.get_contents())
 	append_things(here.get_contents())
-	print("...")
-	print("Thing Key")
-	print(commands.thing_list )
 	
 func append_things(contents: Array):
 	for content in contents:
