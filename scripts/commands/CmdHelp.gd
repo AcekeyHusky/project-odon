@@ -19,7 +19,7 @@ func fun():
 			if child.description != '':
 				_desc = child.get("description")
 			# เช็คว่าแสดงใน help ได้หรือไม่
-			if child.is_in_help == Global.TYPE_IS_IN_HELP.SHOW || ( child.is_in_help == Global.TYPE_IS_IN_HELP.LEARN && get_parent().command_learned.has(child.key) ):
+			if child.help_option == Global.CMD_HELP_OPTION.SHOW || ( child.help_option == Global.CMD_HELP_OPTION.LEARN && get_parent().command_learned.has(child.key) ):
 				display_help_cmd(_key, _desc)
 
 

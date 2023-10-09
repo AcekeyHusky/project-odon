@@ -19,7 +19,6 @@ script = ExtResource("2_6tfxg")
 key = "ตัวอย่าง"
 aliases = Array[String](["ตย"])
 description = "ตัวอย่างการเพิ่ม Command node"
-is_in_help = 1
 
 [node name="CmdGeneral" type="Node" parent="."]
 script = ExtResource("9_58p8r")
@@ -29,7 +28,6 @@ script = ExtResource("3_4dikt")
 text_help_init = "ดูเหมือนว่าคุณจะสามารถทำสิ่งต่อไปนี้ได้..."
 text_help_no_desc = "[color=GRAY][i]ไม่มีคำอธิบายสำหรับคำสั่งนี้ :'([/i][/color]"
 key = "ช่วย"
-is_in_help = 1
 
 [node name="CmdSettings" type="Node" parent="."]
 script = ExtResource("6_446ub")
@@ -38,7 +36,7 @@ script = ExtResource("6_446ub")
 script = ExtResource("4_m5714")
 key = "เหี้ย"
 aliases = Array[String](["พ่อง", "สัส"])
-is_in_help = 1
+help_option = 0
 
 [node name="CmdGo" type="Node" parent="."]
 script = ExtResource("4_tue4j")
@@ -49,16 +47,16 @@ description = "เคลื่อนย้ายตัวเองไปยั�
 [node name="CmdLook" type="Node" parent="."]
 script = ExtResource("7_66ayg")
 key = "ดู"
-aliases = Array[String](["เบิ่ง"])
+aliases = Array[String](["เบิ่ง", "ด"])
 description = "มองดูสิ่งที่อยู่รอบ ๆ ตัวเอง ใช้เพื่อสำรวจสถานที่นั้นว่าคืออะไร และสามารถกำหนดเฉพาะเจาะจงไปยังสิ่งที่ต้องการดูในสถานที่นั้นได้อีกด้วย"
 
 [node name="CmdTake" type="Node" parent="."]
 script = ExtResource("9_mlvog")
-key = "หยิบ"
-aliases = Array[String](["เอา", "โด้"])
+key = "เก็บ"
+aliases = Array[String](["หยิบ", "เอา", "โด้"])
 
 [node name="CmdExampleSecret" type="Node" parent="."]
 script = ExtResource("10_ldg2t")
 key = "คำสั่งลับ"
 description = "ตัวอย่างคำสั่งลับ"
-is_in_help = 2
+help_option = 2

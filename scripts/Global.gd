@@ -30,10 +30,10 @@ func is_in_dictionary(_value: int, _dict: Dictionary) -> bool:
 
 #-------------------------------------------------------
 
-enum TYPE_IS_IN_HELP {
-	SHOW, # แสดง
+enum CMD_HELP_OPTION {
 	HIDE, # ไม่แสดง
+	SHOW, # แสดง
 	LEARN # แสดงหลังจากลองใช้คำสั่งนั้นแล้ว
 }
 
-
+var is_picked_cat = false

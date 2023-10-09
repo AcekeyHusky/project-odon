@@ -1,3 +1,5 @@
+@icon("res://assets/icons/drawer.svg")
+@tool
 extends Thing
 class_name Item # อยากตั้งว่า object ง่ะ แต่ไม่ได้
 

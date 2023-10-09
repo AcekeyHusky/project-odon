@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3 uid="uid://hjweobkukx31"]
+
+[ext_resource type="Script" path="res://scripts/World.gd" id="1_yeuoy"]
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Thing/Room.gd" id="2_n6l5i"]
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Thing/Actor.gd" id="3_kngo8"]
+[ext_resource type="Script" path="res://addons/ProjectOdonTool/CustomType/Thing/Item.gd" id="4_wojlk"]
+
+[node name="World" type="Node" node_paths=PackedStringArray("starter_room", "starter_player")]
+script = ExtResource("1_yeuoy")
+starter_room = NodePath("ห้องอ่านหนังสือ")
+starter_player = NodePath("ห้องอ่านหนังสือ/ผู้เล่น")
+
+[node name="ห้องอ่านหนังสือ" type="Node" parent="." node_paths=PackedStringArray("east")]
+editor_description = "ห้องเริ่มต้น"
+script = ExtResource("2_n6l5i")
+east = NodePath("../ห้องนั่งเล่น")
+east_condition = "has_node(\"รูปปั้นแมว\") == false"
+key = "ห้องอ่านหนังสือ"
+description = "คุณตื่นขึ้นมาในสถานที่ที่คุณไม่รู้จัก
+เมื่อลองมองดีแล้ว ๆ ที่นี่เต็มไปด้วย[thing]ตู้หนังสือไม้ที่บรรจุหนังสือมากมาย[/thing]
+ที่มุมห้องมี[thing]โต๊ะและเก้าอี้พลาสติกสำหรับนั่งอ่านหนังสือ[/thing]
+บนโต๊ะนั้นมี[thing]กระดาษปริศนา[/thing]วางทิ้งไว้
+นอกจากนี้ยังมี[thing]รูปปั้นแมวขวางประตู[/thing]อยู่ทาง[dir]ทิศตะวันออก[/dir]"
+
+[node name="ผู้เล่น" type="Node" parent="ห้องอ่านหนังสือ"]
+script = ExtResource("3_kngo8")
+key = "ผู้เล่น"
+description = "ช่างดูดีอะไรเยี่ยงนี้"
+aliases = Array[String](["ฉัน", "ตัวเอง", "เรา", "อั๊ว", "กู", "ข้า", "me"])
+
+[node name="กางเกงใน" type="Node" parent="ห้องอ่านหนังสือ/ผู้เล่น"]
+script = ExtResource("4_wojlk")
+can_take = true
+key = "กางเกงใน"
+description = "กางเกงในลายจุดสีชมพูหวานแหวว"
+adjective = Array[String](["สีชมพู", "ลายจุด", "หวานแหวว"])
+
+[node name="ตู้หนังสือ" type="Node" parent="ห้องอ่านหนังสือ"]
+script = ExtResource("4_wojlk")
+key = "ตู้หนังสือ"
+description = "ตู้หนังสือธรรมดาที่มีหนังสือวางเต็มชั้นอย่างเป็นระเบียบเรียบร้อย ไม่ค่อยมีอะไรน่าสนใจนัก
+ยกเว้น[thing]หนังสือเล่มหนึ่งทีมี่สีดำโดดเด่นกว่าหนังสือเล่มอื่น[/thing]"
+aliases = Array[String](["ตู้"])
+adjective = Array[String](["ไม้"])
+
+[node name="หนังสือสีดำ" type="Node" parent="ห้องอ่านหนังสือ/ตู้หนังสือ"]
+script = ExtResource("4_wojlk")
+weight = 1.0
+can_take = true
+can_move = true
+key = "หนังสือ"
+description = "หนังสือเก่า ๆ ที่มีรอยฝุ่นเปื้อนจับ ปกหนังสือทำจากหนังสีดำกลับ คุณพลิกทั้งด้านหน้าและด้านหลังแต่กลับไม่พบรูปภาพหรือข้อความใดปรากฏให้เห็น คุณรู้สึกสงสัยเล็กน้อยว่าข้างในนั้นมีอะไรให้[cmd]อ่าน[/cmd]"
+adjective = Array[String](["ดำ", "สีดำ"])
+is_reveal = false
+
+[node name="โต๊ะ" type="Node" parent="ห้องอ่านหนังสือ"]
+script = ExtResource("4_wojlk")
+key = "โต๊ะ"
+adjective = Array[String](["พลาสติก"])
+
+[node name="กระดาษโน๊ตปริศนา" type="Node" parent="ห้องอ่านหนังสือ/โต๊ะ"]
+script = ExtResource("4_wojlk")
+can_take = true
+key = "กระดาษ"
+description = "กระดาษโน๊ตสีขาว มีข้อความเขียนไว้ว่า \"5079\""
+aliases = Array[String](["โน๊ต"])
+adjective = Array[String](["ปริศนา", "สีขาว"])
+
+[node name="ประตู" type="Node" parent="ห้องอ่านหนังสือ"]
+script = ExtResource("4_wojlk")
+key = "ประตู"
+
+[node name="รูปปั้นแมว" type="Node" parent="ห้องอ่านหนังสือ"]
+script = ExtResource("4_wojlk")
+can_take = true
+key = "รูปปั้น"
+adjective = Array[String](["แมว"])
+
+[node name="ห้องนั่งเล่น" type="Node" parent="." node_paths=PackedStringArray("west")]
+script = ExtResource("2_n6l5i")
+west = NodePath("../ห้องอ่านหนังสือ")
+key = "ห้องนั่งเล่น"
+description = "โล่ง"

@@ -1,68 +1,93 @@
 extends Node
 class_name GameManager
 
+## เนื้อเรื่องที่มีให้เล่น
+@export var tales: Array[Tale]
+
 @onready var game = self
-@onready var world = $World
 @onready var commands = $CommandHandler
-@onready var logs = $UI/ScrollContainer/VBoxContainer/Logs
-@onready var input = $UI/Input
-@onready var settings = $UI/Settings
+@onready var logs = %Logs
+@onready var input = %Input
+@onready var finput = %FakeInput
+@onready var music = %Music
 @onready var commandHistory = $UI/CommandHistory
-@onready var music = $Music
-@onready var finput = $UI/FakeInputContainer/FakeInput
 @onready var map = $UI/Layout/SubViewportContainer/Map
 
-@export var here: Room
+signal world_loaded
 
-func tell(text: String):
+var can_use_cmd: bool = true
+var is_wait: bool = true
+var text_send = ""
+
+enum STATES {FIX, FREE}
+var state = STATES.FIX
+
+# แสดงผลข้อความบน Logs
+func tell(_text: String):
 	# ใช้ append_text แทน add_text เพื่อให้สามารถใช้ bbcode ได้
-	if logs.get_parsed_text() != "":
-		logs.append_text("\n"+text.format(world.text_format))
-	else:
-		logs.append_text(text)
+	if logs.get_parsed_text() != "" and _text != "\n":
+		logs.append_text("\n")
+	logs.append_text(_text)
 	await get_tree().create_timer(0.1).timeout
-	_scroll_bottom()
+	
+
+func event_welcome() -> void:
+	tell("สวัสดี! ยินดีต้อนรับสู่ Project Odon การผจญภัยอันยิ่งใหญ่กำลังรอคอยคุณอยู่ แต่ก่อนอื่นคุณต้องเลือกการผจญภัยที่ต้องการเล่นก่อน")
+	tell("\n")
+	
+	for tale in tales:
+		game.tell("%s  %s" % [tales.find(tale),tale.name])
+		
+	tell("\n")
+	tell("พิมพ์หมายเลขที่ต้องการ จากนั้นกดปุ่ม Enter")
+	
 	
 func _ready() -> void:
 	finput.text = ""
-	music.play_bgm()
 	input.grab_focus()
+	event_welcome()
+		
+var is_loaded_world: bool
 
 func _process(_delta) -> void:
-	logs.modulate = $Settings.textColor
-	if Input.is_action_just_pressed("enter") and input.text != "":
-		_on_input_entered()
-		
-	if Input.is_action_just_pressed("ui_right") and commandHistory.text.length() > 0:
+	if text_send and not is_loaded_world:
+		var find_id = int(text_send)
+		if find_id >= 0 and find_id < tales.size():
+			var selecting_id = tales[find_id]
+			var current_tale = load(selecting_id.world).instantiate()
+			print(current_tale)
+			current_tale.name = "World"
+			add_child(current_tale, true)
+			is_loaded_world = true
+			world_loaded.emit()
+			state = STATES.FREE
+			logs.reset()
+			#tell("คุณต้องการเล่นการผจญภัย " + selecting_id.name + " งั้นหรือ?")
+			#tell("พิมพ์ ช/ม แล้วกด Enter เพื่อยืนยัน")
+			#if text_send == "ช":
+			#	tell("Ok")
+			# TODO
+	
+	
+func _input(_event):
+	if _event.is_action_pressed("enter") and input.text != "":
+		on_pressed_enter()
+	if _event.is_action_pressed("ui_right") and commandHistory.text.length() > 0:
 		input.text=""
 		input.insert_text_at_caret(commandHistory.text)
-	
-	# อนิเมทตัวอักษรขึ้นวินาทีละตัว
-	if logs.get_total_character_count() > logs.visible_characters:
-		logs.visible_characters += 1
-		music.play_se_typing()
-
-func _input(event) -> void:
-	# กดปุ่มเพื่อข้ามการอนิเมทตัวอักษร
-	if event.is_pressed():
-		logs.visible_characters = logs.get_total_character_count()
 		
-func can_pass() -> bool:
-	# if no_enemy_block
-		return true
 		
-func _scroll_bottom():
-	$UI/ScrollContainer.scroll_vertical = $UI/ScrollContainer.get_v_scroll_bar().max_value
-	pass
-
-func _on_input_entered() -> void:
+func on_pressed_enter() -> void:
+	if state == STATES.FREE:
 		commands.process_input(input.text)
-		input.clear()
-		finput.clear()
-		commandHistory.text = ""	
+	text_send = input.text
+	commandHistory.text = ""
+	input.clear()
+	finput.clear()
+	
 
 func _on_input_text_changed() -> void:
-	var merge_command = here.command_keywords
+	var merge_command = []
 	var thing_command = []
 	
 	for i in commands.thing_list:
@@ -76,5 +101,11 @@ func _on_input_text_changed() -> void:
 	if match_command.size() > 0 :
 		var command_text = match_command[0]
 		commandHistory.text = command_text
+	
+	if state == STATES.FIX:
+		finput.text = input.text
+		return
 	commands.faking_input()
 	
+
+
