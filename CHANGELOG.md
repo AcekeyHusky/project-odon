@@ -1,5 +1,9 @@
 # Changelog
 
+## 10/10/2023
+fransbell
+- เพิ่ม scritp ui อ่านไอเทมจาก "ผู้เล่น" + signal รายการไอเทมไปยัง InventoryContainer เพื่อแสดงผล ***recursive บัคแบบ 100% ถ้าไม่มี node "ผู้เล่น" ใน World
+- เพิ่มระบบแสดงผลไอเทมจาก signal item_updated
 ## 09/10/2023
 slost:
 - เปลี่ยนชื่อ is_in_help เป็น help_option
@@ -7,7 +11,7 @@ slost:
 - Scroll ของ Logs ค่อย ๆ เลื่อนตามการอนิเมท พร้อมย้ายโค้ดไปไว้ในสคริปต์ของ Logs
 - เพิ่มระบบโหลดเนื้อเรื่องจาก Tale (Resource) //ยังไม่เสร็จดี
 - เปลี่ยน Thing จาก Resource เป็น Node เพื่อความเข้าใจง่ายในการพัฒนา
-- เปลี่ยนชื่อ is_saw เป็น is_looked เพื่อความชัดเจนยิ่งขึ้น
+- เปลี่ยนชื่อ is_saw เป็น is_looked เพื่อความชัดเจนยิ่งขึ้น 
 - ลองทำระบบ Exit Condition ด้วย expressions ต้องหยิบรูปปั้นแมวถึงจะออกจากห้องได้
 
 ## 08/10/2023

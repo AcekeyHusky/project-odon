@@ -24,3 +24,4 @@ func fun():
 		game.tell(msg_failed)
 		
 
+ 

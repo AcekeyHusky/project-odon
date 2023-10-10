@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://mpjlxjskprpi"]
+[gd_scene load_steps=26 format=3 uid="uid://mpjlxjskprpi"]
 
 [ext_resource type="Script" path="res://scripts/Game.gd" id="1_4xvhv"]
 [ext_resource type="Resource" uid="uid://dkpmlurv11i1e" path="res://tales/Example/example_tale.tres" id="2_cmhxu"]
@@ -7,9 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://balihp4qfx0hg" path="res://scenes/commands.tscn" id="5_1teoh"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextRoom.gd" id="6_gbbsh"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextThings.gd" id="7_ijssd"]
+[ext_resource type="Script" path="res://scripts/UI.gd" id="7_uwplx"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextDirection.gd" id="8_euvg3"]
 [ext_resource type="Script" path="res://scripts/Node2D.gd" id="8_pbxnv"]
 [ext_resource type="PackedScene" uid="uid://diocpp02ookyp" path="res://scenes/music.tscn" id="11_cry38"]
+[ext_resource type="Script" path="res://scripts/InventoryContainer.gd" id="12_1pcck"]
 [ext_resource type="Script" path="res://addons/ProjectOdonTool/RichTextEffects/RichTextCommand.gd" id="12_6dn7u"]
 [ext_resource type="FontFile" uid="uid://cxig04e4xx42v" path="res://assets/fonts/TA 8 bit.ttf" id="14_5ptin"]
 [ext_resource type="Script" path="res://scripts/MapController.gd" id="14_46rgl"]
@@ -61,6 +63,7 @@ grow_horizontal = 2
 grow_vertical = 2
 auto_translate = false
 theme = ExtResource("3_ep55m")
+script = ExtResource("7_uwplx")
 
 [node name="Node2D" type="Node2D" parent="UI"]
 script = ExtResource("8_pbxnv")
@@ -144,11 +147,26 @@ offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
+script = ExtResource("12_1pcck")
 
-[node name="Label" type="Label" parent="UI/Layout/InventoryContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Layout/InventoryContainer"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 26.0
+offset_right = 349.0
+offset_bottom = 113.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Layout/InventoryContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Layout/InventoryContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "<placeholder (Inventory)>"
+
+[node name="Label2" type="Label" parent="UI/Layout/InventoryContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "<placeholder (Inventory)>"
+
+[node name="Label3" type="Label" parent="UI/Layout/InventoryContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
 text = "<placeholder (Inventory)>"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI"]
@@ -233,4 +251,5 @@ custom_effects = [SubResource("RichTextEffect_rjs01"), SubResource("RichTextEffe
 threaded = true
 
 [connection signal="world_loaded" from="." to="CommandHandler" method="_on_game_world_loaded"]
+[connection signal="item_updated" from="UI" to="UI/Layout/InventoryContainer" method="_on_ui_item_updated"]
 [connection signal="text_changed" from="UI/Input" to="." method="_on_input_text_changed"]
