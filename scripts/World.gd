@@ -98,7 +98,6 @@ func search_thing_from(_search: String, _from: Thing):
 
 func update_thing_list() -> void:
 	commands.thing_list = []
-	print(here.get_contents())
 	append_things(here.get_contents())
 	
 func append_things(contents: Array):
