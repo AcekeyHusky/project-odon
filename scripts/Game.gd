@@ -19,11 +19,17 @@ var can_use_cmd: bool = true
 var is_wait: bool = true
 var text_send = ""
 
+var voices : PackedStringArray
+
 enum STATES {FIX, FREE}
 var state = STATES.FIX
 
 # แสดงผลข้อความบน Logs
 func tell(_text: String):
+	# เล่นเสียงภาษาไทย
+	if(voices):
+		DisplayServer.tts_speak(_text, voices[0])
+	
 	# ใช้ append_text แทน add_text เพื่อให้สามารถใช้ bbcode ได้
 	if logs.get_parsed_text() != "" and _text != "\n":
 		logs.append_text("\n")
@@ -43,6 +49,12 @@ func event_welcome() -> void:
 	
 	
 func _ready() -> void:
+	# ค้นหาเสียงแค่ครั้งเดียวพอแล้ว
+	var voice_list := DisplayServer.tts_get_voices()
+	for item in voice_list:
+		if item["language"].to_lower().contains("th"):
+			voices = DisplayServer.tts_get_voices_for_language(item["language"])
+	
 	finput.text = ""
 	input.grab_focus()
 	event_welcome()

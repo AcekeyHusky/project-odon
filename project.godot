@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.1", "Mobile")
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
 config/icon="res://assets/icons/icon.svg"
 
+[audio]
+
+general/text_to_speech=true
+
 [autoload]
 
 Global="*res://scripts/Global.gd"
